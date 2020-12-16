@@ -96,6 +96,8 @@
     <Compile Include="EF\usuarios.cs">
       <DependentUpon>dbcontext.tt</DependentUpon>
     </Compile>
+    <Compile Include="empleadoModel.cs" />
+    <Compile Include="notaventaModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

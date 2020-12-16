@@ -52,8 +52,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="citaController.cs" />
+    <Compile Include="clienteController.cs" />
+    <Compile Include="empleadoController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="puestoController.cs" />
+    <Compile Include="servicioController.cs" />
     <Compile Include="userController.cs" />
+    <Compile Include="ventaController.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Modelos\Modelos.csproj">

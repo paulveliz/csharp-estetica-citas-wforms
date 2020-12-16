@@ -54,5 +54,14 @@ namespace Controladores
                 return user;
             }
         }
+
+        public async Task<List<usuarios>> obtenerTodos()
+        {
+            using (var db = new estetica_lupitaEntities())
+            {
+                var usuarios = await db.usuarios.Take(100).ToListAsync();
+                return usuarios.OrderByDescending(o => o.idusuario).ToList();
+            }
+        }
     }
 }
