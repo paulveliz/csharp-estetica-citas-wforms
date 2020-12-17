@@ -29,6 +29,17 @@ namespace Controladores
                 return query[0];
             }
         }
+        public async Task<empleados> verificarNombre(String empleadoNombre)
+        {
+            using (var db = new estetica_lupitaEntities())
+            {
+                var emp = await db.empleados.FirstOrDefaultAsync(f =>
+                    f.emp_nombrecompleto == empleadoNombre &&
+                    f.emp_estatus != 0
+                );
+                return emp;
+            }
+        }
         public async Task<List<empleadoModel>> obtenerTodos()
         {
             using (var db = new estetica_lupitaEntities())
@@ -44,7 +55,11 @@ namespace Controladores
                                        Telefono = empleado.emp_telefono,
                                        Estatus = empleado.emp_estatus
                                    }).ToListAsync();
-                return empleados.OrderByDescending(o => o.Id).ToList();
+                return empleados
+                        .OrderByDescending(o => o.Id)
+                        .ToList()
+                        .Where(f => f.Estatus != 0)
+                        .ToList();
             }
         }
 

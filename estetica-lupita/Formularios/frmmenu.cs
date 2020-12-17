@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Modelos.EF;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,18 +13,16 @@ namespace estetica_lupita
 {
     public partial class frmmenu : Form
     {
-        string usuario;
-        string nivel;
-        public frmmenu(string user, string level)
+        usuarios Usuario { get; set; }
+        public frmmenu(usuarios usuario)
         {
-            usuario = user;
-            nivel = level;
+            Usuario = usuario;
             InitializeComponent();
         }
 
         private void frmmenu_Load(object sender, EventArgs e)
         {
-            this.Text = "Estetica lupita version 1.0 Usuario:" + usuario + " Nivel: " + nivel;
+            this.Text = "Estetica lupita version 1.0 Usuario:" + Usuario.usuario_name + " Nivel: " + "Administrador";
         }
 
         private void btnauditorias_Click(object sender, EventArgs e)

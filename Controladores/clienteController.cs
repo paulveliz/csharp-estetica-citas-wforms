@@ -10,11 +10,20 @@ namespace Controladores
 {
     public class clienteController
     {
+
         public async Task<clientes> obtenerPorId(int clienteId)
         {
             using (var db = new estetica_lupitaEntities())
             {
-                var cliente = await db.clientes.FindAsync(clienteId);
+                var cliente = await db.clientes.FirstOrDefaultAsync(c => c.idcliente == clienteId);
+                return cliente;
+            }
+        }
+        public async Task<clientes> verificarNombre(String clienteNombre)
+        {
+            using (var db = new estetica_lupitaEntities())
+            {
+                var cliente = await db.clientes.FirstOrDefaultAsync(c => c.cl_nombrecompleto == clienteNombre);
                 return cliente;
             }
         }
@@ -24,7 +33,11 @@ namespace Controladores
             using (var db = new estetica_lupitaEntities())
             {
                 var clientes = await db.clientes.Take(100).ToListAsync();
-                return clientes.OrderByDescending(o => o.idcliente).ToList();
+                return clientes
+                        .OrderByDescending(o => o.idcliente)
+                        .ToList()
+                        .Where(c => c.cl_estatus != 0)
+                        .ToList();
             }
         }
 

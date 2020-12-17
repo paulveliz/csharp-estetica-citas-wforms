@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Controladores;
+using Modelos.EF;
 
 namespace estetica_lupita
 {
@@ -17,42 +19,33 @@ namespace estetica_lupita
         {
             InitializeComponent();
         }
-        private Boolean userVerify(string usuario, string pass)
+
+        private async void btnacceder_Click(object sender, EventArgs e)
         {
-            string query = "SELECT idusuario FROM usuarios WHERE usuario_name = @usuario AND usuario_pass = @password";
-            MySqlCommand cmd = new MySqlCommand(query, clases.conexion.conectar());
-            cmd.Parameters.AddWithValue("@usuario", usuario);
-            cmd.Parameters.AddWithValue("@password", clases.encriptacion.encriptar(pass));
-            int exists = Convert.ToInt32(cmd.ExecuteScalar());
-            if (exists > 0)
+            this.Cursor = Cursors.WaitCursor;
+            this.btnacceder.Enabled = false;
+            try
             {
-                clases.auditar.audi(
-                    "Entro al sistema",
-                    DateTime.Now.ToString("dd/MM/yyyy"),
-                    DateTime.Now.Hour + ":" + DateTime.Now.Minute,
-                    exists
-                    );
-                return true;
+                var userController = new userController();
+                var user = await userController.valdiarLogin(new usuarios
+                {
+                    idusuario = 0,
+                    usuario_name = txtusuario.Text.Trim(),
+                    usuario_pass = clases.encriptacion.encriptar(txtpassword.Text.Trim())
+                });
+                if (user != null)
+                {
+                    frmmenu menu = new frmmenu(user);
+                    this.Hide();
+                    menu.Show();
+                }
             }
-            else 
-            { 
-                return false; 
-            }
-
-        }
-
-        private void btnacceder_Click(object sender, EventArgs e)
-        {  //userVerify(txtusuario.Text, txtpassword.Text))
-            if (true)
-            {
-                frmmenu menu = new frmmenu(txtusuario.Text, "administrador");
-                this.Hide();
-                menu.Show();
-            }
-            else
+            catch (Exception)
             {
                 MessageBox.Show("Usuario o contraseña incorrectos.");
             }
+            this.btnacceder.Enabled = true;
+            this.Cursor = Cursors.Default;
         }
 
         private void label1_Click(object sender, EventArgs e)

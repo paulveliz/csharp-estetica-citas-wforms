@@ -10,6 +10,7 @@ namespace Controladores
 {
     public class puestoController
     {
+
         public async Task<puestos> obtenerPorId(int puestoId)
         {
             using (var db = new estetica_lupitaEntities())
@@ -18,12 +19,27 @@ namespace Controladores
                 return puesto;
             }
         }
+        public async Task<puestos> verificarNombre(String puestoNombre)
+        {
+            using (var db = new estetica_lupitaEntities())
+            {
+                var puesto = await db.puestos.FirstOrDefaultAsync(f => 
+                    f.pst_descripcion == puestoNombre &&
+                    f.pst_estatus != 0
+                );
+                return puesto;
+            }
+        }
         public async Task<List<puestos>> obtenerTodos()
         {
             using (var db = new estetica_lupitaEntities())
             {
                 var puestos = await db.puestos.Take(100).ToListAsync();
-                return puestos.OrderByDescending(o => o.idpuesto).ToList();
+                return puestos
+                        .OrderByDescending(o => o.idpuesto)
+                        .ToList()
+                        .Where(p => p.pst_estatus != 0)
+                        .ToList();
             }
         }
         public async Task<puestos> crearNuevo(puestos puesto)

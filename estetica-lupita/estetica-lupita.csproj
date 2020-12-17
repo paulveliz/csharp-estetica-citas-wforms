@@ -236,6 +236,10 @@
       <Project>{511ebe70-82ca-4213-9469-c88dd2d9648a}</Project>
       <Name>Controladores</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Modelos\Modelos.csproj">
+      <Project>{F584BB1D-6AC9-48DB-B557-DD3BFC63C04E}</Project>
+      <Name>Modelos</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="iconos\reporte.png" />

@@ -14,12 +14,22 @@ namespace Controladores
         {
             using(var db = new estetica_lupitaEntities())
             {
-                var user = await db.usuarios.Where(u =>
-                    u.usuario_pass == usuario.usuario_pass &&
-                    u.usuario_name == usuario.usuario_name
-                ).ToListAsync();
+                var user = await db.usuarios.FirstAsync(u =>
+                    u.usuario_name == usuario.usuario_name &&
+                    u.usuario_pass == usuario.usuario_pass
+                );
+                return user != null ? user : null;
+            }
+        }
 
-                return user[0];
+        public async Task<usuarios> verificarExistencia(String nombreUsuario)
+        {
+            using (var db = new estetica_lupitaEntities())
+            {
+                var user = await db.usuarios.FirstOrDefaultAsync(u =>
+                    u.usuario_name == nombreUsuario
+                );
+                return user != null ? user : null;
             }
         }
 
@@ -45,10 +55,11 @@ namespace Controladores
             }
         }
 
-        public async Task<usuarios> eliminarUsuario(usuarios usuario)
+        public async Task<usuarios> eliminarUsuario(int usuarioId)
         {
             using (var db = new estetica_lupitaEntities())
             {
+                var usuario = await db.usuarios.FirstOrDefaultAsync(f => f.idusuario == usuarioId);
                 var user = db.usuarios.Remove(usuario);
                 await db.SaveChangesAsync();
                 return user;
