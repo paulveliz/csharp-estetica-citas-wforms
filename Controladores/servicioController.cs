@@ -10,6 +10,7 @@ namespace Controladores
 {
     public class servicioController
     {
+
         public async Task<servicios> obtenerPorId(int servicioId)
         {
             using (var db = new estetica_lupitaEntities())
@@ -18,12 +19,26 @@ namespace Controladores
                 return servicio;
             }
         }
+        public async Task<servicios> verificarNombre(string servicioNombre)
+        {
+            using (var db = new estetica_lupitaEntities())
+            {
+                var servicio = await db.servicios.FirstOrDefaultAsync(f => 
+                    f.sv_descripcion == servicioNombre &&
+                    f.sv_estatus != 0
+                );
+                return servicio;
+            }
+        }
         public async Task<List<servicios>> obtenerTodos()
         {
             using (var db = new estetica_lupitaEntities())
             {
                 var servicios = await db.servicios.Take(100).ToListAsync();
-                return servicios.OrderByDescending(o => o.idservicio).ToList();
+                return servicios.OrderByDescending(o => o.idservicio)
+                                .ToList()
+                                .Where(s => s.sv_estatus != 0)
+                                .ToList();
             }
         }
         public async Task<servicios> crearNuevo(servicios servicio)
