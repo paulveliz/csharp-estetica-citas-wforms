@@ -30,392 +30,515 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCitas));
             this.groupAgebdarCita = new System.Windows.Forms.GroupBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.btnAgendar = new System.Windows.Forms.Button();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.btncliente = new System.Windows.Forms.Button();
+            this.btnempleado = new System.Windows.Forms.Button();
+            this.btnagendar = new System.Windows.Forms.Button();
+            this.txtminuto = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txthora = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.FechasDesde = new System.Windows.Forms.DateTimePicker();
+            this.txtfecha = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.cbxcliente = new System.Windows.Forms.ComboBox();
+            this.txtcantservicios = new System.Windows.Forms.NumericUpDown();
+            this.cboxservicio = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.txtnombre = new System.Windows.Forms.TextBox();
-            this.txtlocalidad = new System.Windows.Forms.TextBox();
+            this.txtempleado = new System.Windows.Forms.TextBox();
+            this.txtcliente = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.groupOrdenarcita = new System.Windows.Forms.GroupBox();
-            this.btnOpciones = new System.Windows.Forms.Button();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.RdbUsuario = new System.Windows.Forms.RadioButton();
-            this.RdbTodos = new System.Windows.Forms.RadioButton();
+            this.btnvisualizar = new System.Windows.Forms.Button();
+            this.rdbpendientes = new System.Windows.Forms.RadioButton();
+            this.rdbsatisfactorias = new System.Windows.Forms.RadioButton();
+            this.rdbprogreso = new System.Windows.Forms.RadioButton();
             this.groupCitasRegistradas = new System.Windows.Forms.GroupBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvbase = new System.Windows.Forms.DataGridView();
+            this.rdbcanceladas = new System.Windows.Forms.RadioButton();
+            this.txtbusqueda = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.rbnservicio = new System.Windows.Forms.RadioButton();
+            this.rbnfolio = new System.Windows.Forms.RadioButton();
+            this.rbncliente = new System.Windows.Forms.RadioButton();
+            this.rbnempleado = new System.Windows.Forms.RadioButton();
+            this.txtfechaorder1 = new System.Windows.Forms.DateTimePicker();
+            this.txtfechaorder2 = new System.Windows.Forms.DateTimePicker();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.btnporfechas = new System.Windows.Forms.Button();
             this.groupAgebdarCita.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtcantservicios)).BeginInit();
             this.groupOrdenarcita.SuspendLayout();
             this.groupCitasRegistradas.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvbase)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupAgebdarCita
             // 
-            this.groupAgebdarCita.Controls.Add(this.button2);
-            this.groupAgebdarCita.Controls.Add(this.button1);
-            this.groupAgebdarCita.Controls.Add(this.btnAgendar);
-            this.groupAgebdarCita.Controls.Add(this.textBox3);
+            this.groupAgebdarCita.Controls.Add(this.btncliente);
+            this.groupAgebdarCita.Controls.Add(this.btnempleado);
+            this.groupAgebdarCita.Controls.Add(this.btnagendar);
+            this.groupAgebdarCita.Controls.Add(this.txtminuto);
             this.groupAgebdarCita.Controls.Add(this.label7);
-            this.groupAgebdarCita.Controls.Add(this.textBox1);
+            this.groupAgebdarCita.Controls.Add(this.txthora);
             this.groupAgebdarCita.Controls.Add(this.label6);
             this.groupAgebdarCita.Controls.Add(this.label5);
-            this.groupAgebdarCita.Controls.Add(this.FechasDesde);
+            this.groupAgebdarCita.Controls.Add(this.txtfecha);
             this.groupAgebdarCita.Controls.Add(this.label1);
-            this.groupAgebdarCita.Controls.Add(this.numericUpDown1);
-            this.groupAgebdarCita.Controls.Add(this.cbxcliente);
+            this.groupAgebdarCita.Controls.Add(this.txtcantservicios);
+            this.groupAgebdarCita.Controls.Add(this.cboxservicio);
             this.groupAgebdarCita.Controls.Add(this.label2);
             this.groupAgebdarCita.Controls.Add(this.label3);
-            this.groupAgebdarCita.Controls.Add(this.txtnombre);
-            this.groupAgebdarCita.Controls.Add(this.txtlocalidad);
+            this.groupAgebdarCita.Controls.Add(this.txtempleado);
+            this.groupAgebdarCita.Controls.Add(this.txtcliente);
             this.groupAgebdarCita.Controls.Add(this.label4);
-            this.groupAgebdarCita.Location = new System.Drawing.Point(4, 5);
-            this.groupAgebdarCita.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupAgebdarCita.Location = new System.Drawing.Point(4, 4);
+            this.groupAgebdarCita.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupAgebdarCita.Name = "groupAgebdarCita";
-            this.groupAgebdarCita.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupAgebdarCita.Size = new System.Drawing.Size(382, 454);
+            this.groupAgebdarCita.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupAgebdarCita.Size = new System.Drawing.Size(340, 363);
             this.groupAgebdarCita.TabIndex = 0;
             this.groupAgebdarCita.TabStop = false;
             this.groupAgebdarCita.Text = "Agendar nueva cita";
             // 
-            // button2
+            // btncliente
             // 
-            this.button2.Location = new System.Drawing.Point(228, 138);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(45, 31);
-            this.button2.TabIndex = 32;
-            this.button2.Text = "?";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btncliente.Location = new System.Drawing.Point(289, 110);
+            this.btncliente.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btncliente.Name = "btncliente";
+            this.btncliente.Size = new System.Drawing.Size(40, 25);
+            this.btncliente.TabIndex = 32;
+            this.btncliente.Text = "?";
+            this.btncliente.UseVisualStyleBackColor = true;
+            this.btncliente.Click += new System.EventHandler(this.btncliente_Click);
             // 
-            // button1
+            // btnempleado
             // 
-            this.button1.Location = new System.Drawing.Point(228, 78);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(45, 35);
-            this.button1.TabIndex = 31;
-            this.button1.Text = "?";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnempleado.Location = new System.Drawing.Point(289, 59);
+            this.btnempleado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnempleado.Name = "btnempleado";
+            this.btnempleado.Size = new System.Drawing.Size(40, 28);
+            this.btnempleado.TabIndex = 31;
+            this.btnempleado.Text = "?";
+            this.btnempleado.UseVisualStyleBackColor = true;
+            this.btnempleado.Click += new System.EventHandler(this.btnempleado_Click);
             // 
-            // btnAgendar
+            // btnagendar
             // 
-            this.btnAgendar.Location = new System.Drawing.Point(70, 393);
-            this.btnAgendar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btnAgendar.Name = "btnAgendar";
-            this.btnAgendar.Size = new System.Drawing.Size(159, 51);
-            this.btnAgendar.TabIndex = 30;
-            this.btnAgendar.Text = "Agendar Cita";
-            this.btnAgendar.UseVisualStyleBackColor = true;
+            this.btnagendar.Enabled = false;
+            this.btnagendar.Location = new System.Drawing.Point(62, 314);
+            this.btnagendar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnagendar.Name = "btnagendar";
+            this.btnagendar.Size = new System.Drawing.Size(142, 27);
+            this.btnagendar.TabIndex = 30;
+            this.btnagendar.Text = "Agendar Cita";
+            this.btnagendar.UseVisualStyleBackColor = true;
+            this.btnagendar.Click += new System.EventHandler(this.btnagendar_Click);
             // 
-            // textBox3
+            // txtminuto
             // 
-            this.textBox3.Enabled = false;
-            this.textBox3.Location = new System.Drawing.Point(174, 348);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(55, 26);
-            this.textBox3.TabIndex = 29;
+            this.txtminuto.Enabled = false;
+            this.txtminuto.Location = new System.Drawing.Point(155, 278);
+            this.txtminuto.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtminuto.Name = "txtminuto";
+            this.txtminuto.Size = new System.Drawing.Size(49, 22);
+            this.txtminuto.TabIndex = 29;
+            this.txtminuto.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtminuto_KeyPress);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(142, 353);
+            this.label7.Location = new System.Drawing.Point(126, 282);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(15, 20);
+            this.label7.Size = new System.Drawing.Size(13, 17);
             this.label7.TabIndex = 27;
             this.label7.Text = ":";
             // 
-            // textBox1
+            // txthora
             // 
-            this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(73, 348);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(55, 26);
-            this.textBox1.TabIndex = 26;
+            this.txthora.Enabled = false;
+            this.txthora.Location = new System.Drawing.Point(65, 278);
+            this.txthora.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txthora.Name = "txthora";
+            this.txthora.Size = new System.Drawing.Size(49, 22);
+            this.txthora.TabIndex = 26;
+            this.txthora.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txthora_KeyPress);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(14, 348);
+            this.label6.Location = new System.Drawing.Point(12, 278);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(44, 20);
+            this.label6.Size = new System.Drawing.Size(39, 17);
             this.label6.TabIndex = 25;
             this.label6.Text = "Hora";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(14, 249);
+            this.label5.Location = new System.Drawing.Point(12, 199);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(54, 20);
+            this.label5.Size = new System.Drawing.Size(47, 17);
             this.label5.TabIndex = 24;
             this.label5.Text = "Fecha";
             // 
-            // FechasDesde
+            // txtfecha
             // 
-            this.FechasDesde.Location = new System.Drawing.Point(9, 274);
-            this.FechasDesde.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.FechasDesde.Name = "FechasDesde";
-            this.FechasDesde.Size = new System.Drawing.Size(314, 26);
-            this.FechasDesde.TabIndex = 23;
+            this.txtfecha.Enabled = false;
+            this.txtfecha.Location = new System.Drawing.Point(8, 219);
+            this.txtfecha.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtfecha.Name = "txtfecha";
+            this.txtfecha.Size = new System.Drawing.Size(280, 22);
+            this.txtfecha.TabIndex = 23;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(219, 174);
+            this.label1.Location = new System.Drawing.Point(269, 140);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(73, 20);
+            this.label1.Size = new System.Drawing.Size(64, 17);
             this.label1.TabIndex = 22;
             this.label1.Text = "Cantidad";
             // 
-            // numericUpDown1
+            // txtcantservicios
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(228, 198);
-            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(58, 26);
-            this.numericUpDown1.TabIndex = 21;
+            this.txtcantservicios.Enabled = false;
+            this.txtcantservicios.Location = new System.Drawing.Point(277, 159);
+            this.txtcantservicios.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtcantservicios.Name = "txtcantservicios";
+            this.txtcantservicios.Size = new System.Drawing.Size(52, 22);
+            this.txtcantservicios.TabIndex = 21;
+            this.txtcantservicios.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
-            // cbxcliente
+            // cboxservicio
             // 
-            this.cbxcliente.FormattingEnabled = true;
-            this.cbxcliente.Location = new System.Drawing.Point(9, 198);
-            this.cbxcliente.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.cbxcliente.Name = "cbxcliente";
-            this.cbxcliente.Size = new System.Drawing.Size(208, 28);
-            this.cbxcliente.TabIndex = 20;
+            this.cboxservicio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxservicio.Enabled = false;
+            this.cboxservicio.FormattingEnabled = true;
+            this.cboxservicio.Location = new System.Drawing.Point(8, 158);
+            this.cboxservicio.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cboxservicio.Name = "cboxservicio";
+            this.cboxservicio.Size = new System.Drawing.Size(261, 24);
+            this.cboxservicio.TabIndex = 20;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(14, 38);
+            this.label2.Location = new System.Drawing.Point(12, 30);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(81, 20);
+            this.label2.Size = new System.Drawing.Size(71, 17);
             this.label2.TabIndex = 8;
             this.label2.Text = "Empleado";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(14, 114);
+            this.label3.Location = new System.Drawing.Point(12, 91);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(58, 20);
+            this.label3.Size = new System.Drawing.Size(51, 17);
             this.label3.TabIndex = 9;
             this.label3.Text = "Cliente";
             // 
-            // txtnombre
+            // txtempleado
             // 
-            this.txtnombre.Enabled = false;
-            this.txtnombre.Location = new System.Drawing.Point(9, 78);
-            this.txtnombre.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txtnombre.Name = "txtnombre";
-            this.txtnombre.Size = new System.Drawing.Size(208, 26);
-            this.txtnombre.TabIndex = 10;
+            this.txtempleado.Location = new System.Drawing.Point(8, 62);
+            this.txtempleado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtempleado.Name = "txtempleado";
+            this.txtempleado.ReadOnly = true;
+            this.txtempleado.Size = new System.Drawing.Size(273, 22);
+            this.txtempleado.TabIndex = 10;
             // 
-            // txtlocalidad
+            // txtcliente
             // 
-            this.txtlocalidad.Enabled = false;
-            this.txtlocalidad.Location = new System.Drawing.Point(9, 138);
-            this.txtlocalidad.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txtlocalidad.Name = "txtlocalidad";
-            this.txtlocalidad.Size = new System.Drawing.Size(208, 26);
-            this.txtlocalidad.TabIndex = 11;
+            this.txtcliente.Location = new System.Drawing.Point(8, 110);
+            this.txtcliente.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtcliente.Name = "txtcliente";
+            this.txtcliente.ReadOnly = true;
+            this.txtcliente.Size = new System.Drawing.Size(273, 22);
+            this.txtcliente.TabIndex = 11;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(14, 174);
+            this.label4.Location = new System.Drawing.Point(12, 139);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(64, 20);
+            this.label4.Size = new System.Drawing.Size(58, 17);
             this.label4.TabIndex = 13;
             this.label4.Text = "Servicio";
             // 
             // groupOrdenarcita
             // 
-            this.groupOrdenarcita.Controls.Add(this.btnOpciones);
-            this.groupOrdenarcita.Controls.Add(this.radioButton1);
-            this.groupOrdenarcita.Controls.Add(this.RdbUsuario);
-            this.groupOrdenarcita.Controls.Add(this.RdbTodos);
-            this.groupOrdenarcita.Location = new System.Drawing.Point(4, 489);
-            this.groupOrdenarcita.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupOrdenarcita.Controls.Add(this.rdbcanceladas);
+            this.groupOrdenarcita.Controls.Add(this.btnvisualizar);
+            this.groupOrdenarcita.Controls.Add(this.rdbpendientes);
+            this.groupOrdenarcita.Controls.Add(this.rdbsatisfactorias);
+            this.groupOrdenarcita.Controls.Add(this.rdbprogreso);
+            this.groupOrdenarcita.Location = new System.Drawing.Point(4, 391);
+            this.groupOrdenarcita.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupOrdenarcita.Name = "groupOrdenarcita";
-            this.groupOrdenarcita.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupOrdenarcita.Size = new System.Drawing.Size(382, 185);
+            this.groupOrdenarcita.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupOrdenarcita.Size = new System.Drawing.Size(340, 148);
             this.groupOrdenarcita.TabIndex = 1;
             this.groupOrdenarcita.TabStop = false;
             this.groupOrdenarcita.Text = "Ordenar citas";
             // 
-            // btnOpciones
+            // btnvisualizar
             // 
-            this.btnOpciones.Location = new System.Drawing.Point(223, 20);
-            this.btnOpciones.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btnOpciones.Name = "btnOpciones";
-            this.btnOpciones.Size = new System.Drawing.Size(147, 44);
-            this.btnOpciones.TabIndex = 31;
-            this.btnOpciones.Text = "Opciones";
-            this.btnOpciones.UseVisualStyleBackColor = true;
+            this.btnvisualizar.Location = new System.Drawing.Point(202, 105);
+            this.btnvisualizar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnvisualizar.Name = "btnvisualizar";
+            this.btnvisualizar.Size = new System.Drawing.Size(131, 35);
+            this.btnvisualizar.TabIndex = 31;
+            this.btnvisualizar.Text = "Visualizar";
+            this.btnvisualizar.UseVisualStyleBackColor = true;
+            this.btnvisualizar.Click += new System.EventHandler(this.btnvisualizar_Click);
             // 
-            // radioButton1
+            // rdbpendientes
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(14, 112);
-            this.radioButton1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(153, 24);
-            this.radioButton1.TabIndex = 4;
-            this.radioButton1.Text = "Citas pendientes";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.rdbpendientes.AutoSize = true;
+            this.rdbpendientes.Location = new System.Drawing.Point(12, 90);
+            this.rdbpendientes.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rdbpendientes.Name = "rdbpendientes";
+            this.rdbpendientes.Size = new System.Drawing.Size(134, 21);
+            this.rdbpendientes.TabIndex = 4;
+            this.rdbpendientes.Text = "Citas pendientes";
+            this.rdbpendientes.UseVisualStyleBackColor = true;
             // 
-            // RdbUsuario
+            // rdbsatisfactorias
             // 
-            this.RdbUsuario.AutoSize = true;
-            this.RdbUsuario.Location = new System.Drawing.Point(14, 77);
-            this.RdbUsuario.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.RdbUsuario.Name = "RdbUsuario";
-            this.RdbUsuario.Size = new System.Drawing.Size(168, 24);
-            this.RdbUsuario.TabIndex = 3;
-            this.RdbUsuario.Text = "Citas satisfactorias";
-            this.RdbUsuario.UseVisualStyleBackColor = true;
+            this.rdbsatisfactorias.AutoSize = true;
+            this.rdbsatisfactorias.Location = new System.Drawing.Point(12, 62);
+            this.rdbsatisfactorias.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rdbsatisfactorias.Name = "rdbsatisfactorias";
+            this.rdbsatisfactorias.Size = new System.Drawing.Size(147, 21);
+            this.rdbsatisfactorias.TabIndex = 3;
+            this.rdbsatisfactorias.Text = "Citas satisfactorias";
+            this.rdbsatisfactorias.UseVisualStyleBackColor = true;
             // 
-            // RdbTodos
+            // rdbprogreso
             // 
-            this.RdbTodos.AutoSize = true;
-            this.RdbTodos.Checked = true;
-            this.RdbTodos.Location = new System.Drawing.Point(14, 40);
-            this.RdbTodos.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.RdbTodos.Name = "RdbTodos";
-            this.RdbTodos.Size = new System.Drawing.Size(159, 24);
-            this.RdbTodos.TabIndex = 2;
-            this.RdbTodos.TabStop = true;
-            this.RdbTodos.Text = "Citas en progreso";
-            this.RdbTodos.UseVisualStyleBackColor = true;
+            this.rdbprogreso.AutoSize = true;
+            this.rdbprogreso.Checked = true;
+            this.rdbprogreso.Location = new System.Drawing.Point(12, 32);
+            this.rdbprogreso.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rdbprogreso.Name = "rdbprogreso";
+            this.rdbprogreso.Size = new System.Drawing.Size(141, 21);
+            this.rdbprogreso.TabIndex = 2;
+            this.rdbprogreso.TabStop = true;
+            this.rdbprogreso.Text = "Citas en progreso";
+            this.rdbprogreso.UseVisualStyleBackColor = true;
             // 
             // groupCitasRegistradas
             // 
-            this.groupCitasRegistradas.Controls.Add(this.dataGridView1);
-            this.groupCitasRegistradas.Location = new System.Drawing.Point(396, 20);
-            this.groupCitasRegistradas.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupCitasRegistradas.Controls.Add(this.dgvbase);
+            this.groupCitasRegistradas.Location = new System.Drawing.Point(352, 172);
+            this.groupCitasRegistradas.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupCitasRegistradas.Name = "groupCitasRegistradas";
-            this.groupCitasRegistradas.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupCitasRegistradas.Size = new System.Drawing.Size(1118, 634);
+            this.groupCitasRegistradas.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupCitasRegistradas.Size = new System.Drawing.Size(994, 380);
             this.groupCitasRegistradas.TabIndex = 2;
             this.groupCitasRegistradas.TabStop = false;
-            this.groupCitasRegistradas.Text = "Citas Registradas";
+            this.groupCitasRegistradas.Text = "Citas Registradas (doble click para cancelar)";
             // 
-            // dataGridView1
+            // dgvbase
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1,
-            this.Column2,
-            this.Column3,
-            this.Column4,
-            this.Column5,
-            this.Column6,
-            this.Column7,
-            this.Column8});
-            this.dataGridView1.Location = new System.Drawing.Point(0, 29);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 62;
-            this.dataGridView1.Size = new System.Drawing.Size(1112, 605);
-            this.dataGridView1.TabIndex = 0;
+            this.dgvbase.AllowUserToAddRows = false;
+            this.dgvbase.AllowUserToDeleteRows = false;
+            this.dgvbase.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvbase.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvbase.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvbase.Location = new System.Drawing.Point(4, 19);
+            this.dgvbase.Margin = new System.Windows.Forms.Padding(4);
+            this.dgvbase.Name = "dgvbase";
+            this.dgvbase.ReadOnly = true;
+            this.dgvbase.RowHeadersVisible = false;
+            this.dgvbase.RowHeadersWidth = 62;
+            this.dgvbase.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvbase.Size = new System.Drawing.Size(986, 357);
+            this.dgvbase.TabIndex = 1;
+            this.dgvbase.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvbase_CellDoubleClick);
             // 
-            // Column1
+            // rdbcanceladas
             // 
-            this.Column1.HeaderText = "No.cita";
-            this.Column1.MinimumWidth = 8;
-            this.Column1.Name = "Column1";
-            this.Column1.Width = 50;
+            this.rdbcanceladas.AutoSize = true;
+            this.rdbcanceladas.Location = new System.Drawing.Point(12, 119);
+            this.rdbcanceladas.Margin = new System.Windows.Forms.Padding(4);
+            this.rdbcanceladas.Name = "rdbcanceladas";
+            this.rdbcanceladas.Size = new System.Drawing.Size(136, 21);
+            this.rdbcanceladas.TabIndex = 32;
+            this.rdbcanceladas.Text = "Citas canceladas";
+            this.rdbcanceladas.UseVisualStyleBackColor = true;
             // 
-            // Column2
+            // txtbusqueda
             // 
-            this.Column2.HeaderText = "Empleado";
-            this.Column2.MinimumWidth = 8;
-            this.Column2.Name = "Column2";
-            this.Column2.Width = 150;
+            this.txtbusqueda.Location = new System.Drawing.Point(352, 50);
+            this.txtbusqueda.Name = "txtbusqueda";
+            this.txtbusqueda.Size = new System.Drawing.Size(211, 22);
+            this.txtbusqueda.TabIndex = 3;
+            this.txtbusqueda.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtbusqueda_KeyPress);
             // 
-            // Column3
+            // label8
             // 
-            this.Column3.HeaderText = "Cliente";
-            this.Column3.MinimumWidth = 8;
-            this.Column3.Name = "Column3";
-            this.Column3.Width = 150;
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(349, 30);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(76, 17);
+            this.label8.TabIndex = 33;
+            this.label8.Text = "Busqueda:";
             // 
-            // Column4
+            // label9
             // 
-            this.Column4.HeaderText = "Servicio";
-            this.Column4.MinimumWidth = 8;
-            this.Column4.Name = "Column4";
-            this.Column4.Width = 150;
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(1052, 4);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(181, 17);
+            this.label9.TabIndex = 35;
+            this.label9.Text = "Buscar por lapso de fechas";
             // 
-            // Column5
+            // groupBox1
             // 
-            this.Column5.HeaderText = "Cant";
-            this.Column5.MinimumWidth = 8;
-            this.Column5.Name = "Column5";
-            this.Column5.Width = 50;
+            this.groupBox1.Controls.Add(this.rbnservicio);
+            this.groupBox1.Controls.Add(this.rbnfolio);
+            this.groupBox1.Controls.Add(this.rbncliente);
+            this.groupBox1.Controls.Add(this.rbnempleado);
+            this.groupBox1.Controls.Add(this.txtbusqueda);
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Location = new System.Drawing.Point(360, 13);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox1.Size = new System.Drawing.Size(570, 101);
+            this.groupBox1.TabIndex = 36;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Buscar por";
             // 
-            // Column6
+            // rbnservicio
             // 
-            this.Column6.HeaderText = "Fecha";
-            this.Column6.MinimumWidth = 8;
-            this.Column6.Name = "Column6";
-            this.Column6.Width = 150;
+            this.rbnservicio.AutoSize = true;
+            this.rbnservicio.Location = new System.Drawing.Point(161, 61);
+            this.rbnservicio.Margin = new System.Windows.Forms.Padding(4);
+            this.rbnservicio.Name = "rbnservicio";
+            this.rbnservicio.Size = new System.Drawing.Size(131, 21);
+            this.rbnservicio.TabIndex = 32;
+            this.rbnservicio.Text = "Nombre servicio";
+            this.rbnservicio.UseVisualStyleBackColor = true;
             // 
-            // Column7
+            // rbnfolio
             // 
-            this.Column7.HeaderText = "Hora";
-            this.Column7.MinimumWidth = 8;
-            this.Column7.Name = "Column7";
-            this.Column7.Width = 150;
+            this.rbnfolio.AutoSize = true;
+            this.rbnfolio.Location = new System.Drawing.Point(12, 61);
+            this.rbnfolio.Margin = new System.Windows.Forms.Padding(4);
+            this.rbnfolio.Name = "rbnfolio";
+            this.rbnfolio.Size = new System.Drawing.Size(105, 21);
+            this.rbnfolio.TabIndex = 4;
+            this.rbnfolio.Text = "Folio de cita";
+            this.rbnfolio.UseVisualStyleBackColor = true;
             // 
-            // Column8
+            // rbncliente
             // 
-            this.Column8.HeaderText = "Estado";
-            this.Column8.MinimumWidth = 8;
-            this.Column8.Name = "Column8";
-            this.Column8.Width = 150;
+            this.rbncliente.AutoSize = true;
+            this.rbncliente.Location = new System.Drawing.Point(161, 32);
+            this.rbncliente.Margin = new System.Windows.Forms.Padding(4);
+            this.rbncliente.Name = "rbncliente";
+            this.rbncliente.Size = new System.Drawing.Size(124, 21);
+            this.rbncliente.TabIndex = 3;
+            this.rbncliente.Text = "Nombre cliente";
+            this.rbncliente.UseVisualStyleBackColor = true;
+            // 
+            // rbnempleado
+            // 
+            this.rbnempleado.AutoSize = true;
+            this.rbnempleado.Checked = true;
+            this.rbnempleado.Location = new System.Drawing.Point(12, 32);
+            this.rbnempleado.Margin = new System.Windows.Forms.Padding(4);
+            this.rbnempleado.Name = "rbnempleado";
+            this.rbnempleado.Size = new System.Drawing.Size(145, 21);
+            this.rbnempleado.TabIndex = 2;
+            this.rbnempleado.TabStop = true;
+            this.rbnempleado.Text = "Nombre empleado";
+            this.rbnempleado.UseVisualStyleBackColor = true;
+            // 
+            // txtfechaorder1
+            // 
+            this.txtfechaorder1.Location = new System.Drawing.Point(1055, 47);
+            this.txtfechaorder1.Margin = new System.Windows.Forms.Padding(4);
+            this.txtfechaorder1.Name = "txtfechaorder1";
+            this.txtfechaorder1.Size = new System.Drawing.Size(280, 22);
+            this.txtfechaorder1.TabIndex = 37;
+            // 
+            // txtfechaorder2
+            // 
+            this.txtfechaorder2.Location = new System.Drawing.Point(1055, 95);
+            this.txtfechaorder2.Margin = new System.Windows.Forms.Padding(4);
+            this.txtfechaorder2.Name = "txtfechaorder2";
+            this.txtfechaorder2.Size = new System.Drawing.Size(280, 22);
+            this.txtfechaorder2.TabIndex = 38;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(1052, 28);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(47, 17);
+            this.label10.TabIndex = 39;
+            this.label10.Text = "desde";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(1052, 78);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(43, 17);
+            this.label11.TabIndex = 40;
+            this.label11.Text = "hasta";
+            // 
+            // btnporfechas
+            // 
+            this.btnporfechas.Location = new System.Drawing.Point(1199, 125);
+            this.btnporfechas.Margin = new System.Windows.Forms.Padding(4);
+            this.btnporfechas.Name = "btnporfechas";
+            this.btnporfechas.Size = new System.Drawing.Size(136, 39);
+            this.btnporfechas.TabIndex = 33;
+            this.btnporfechas.Text = "Buscar";
+            this.btnporfechas.UseVisualStyleBackColor = true;
+            this.btnporfechas.Click += new System.EventHandler(this.btnporfechas_Click);
             // 
             // frmCitas
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1638, 694);
+            this.ClientSize = new System.Drawing.Size(1376, 555);
+            this.Controls.Add(this.btnporfechas);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.txtfechaorder2);
+            this.Controls.Add(this.txtfechaorder1);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.label9);
             this.Controls.Add(this.groupCitasRegistradas);
             this.Controls.Add(this.groupOrdenarcita);
             this.Controls.Add(this.groupAgebdarCita);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmCitas";
@@ -424,49 +547,58 @@
             this.Load += new System.EventHandler(this.frmCitas_Load);
             this.groupAgebdarCita.ResumeLayout(false);
             this.groupAgebdarCita.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtcantservicios)).EndInit();
             this.groupOrdenarcita.ResumeLayout(false);
             this.groupOrdenarcita.PerformLayout();
             this.groupCitasRegistradas.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvbase)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.GroupBox groupAgebdarCita;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox txtminuto;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txthora;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.DateTimePicker FechasDesde;
+        private System.Windows.Forms.DateTimePicker txtfecha;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.ComboBox cbxcliente;
+        private System.Windows.Forms.NumericUpDown txtcantservicios;
+        private System.Windows.Forms.ComboBox cboxservicio;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtnombre;
-        private System.Windows.Forms.TextBox txtlocalidad;
+        private System.Windows.Forms.TextBox txtempleado;
+        private System.Windows.Forms.TextBox txtcliente;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button btnAgendar;
+        private System.Windows.Forms.Button btnagendar;
         private System.Windows.Forms.GroupBox groupOrdenarcita;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton RdbUsuario;
-        private System.Windows.Forms.RadioButton RdbTodos;
-        private System.Windows.Forms.Button btnOpciones;
+        private System.Windows.Forms.RadioButton rdbpendientes;
+        private System.Windows.Forms.RadioButton rdbsatisfactorias;
+        private System.Windows.Forms.RadioButton rdbprogreso;
+        private System.Windows.Forms.Button btnvisualizar;
         private System.Windows.Forms.GroupBox groupCitasRegistradas;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btncliente;
+        private System.Windows.Forms.Button btnempleado;
+        private System.Windows.Forms.DataGridView dgvbase;
+        private System.Windows.Forms.RadioButton rdbcanceladas;
+        private System.Windows.Forms.TextBox txtbusqueda;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RadioButton rbnservicio;
+        private System.Windows.Forms.RadioButton rbnfolio;
+        private System.Windows.Forms.RadioButton rbncliente;
+        private System.Windows.Forms.RadioButton rbnempleado;
+        private System.Windows.Forms.DateTimePicker txtfechaorder1;
+        private System.Windows.Forms.DateTimePicker txtfechaorder2;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button btnporfechas;
     }
 }

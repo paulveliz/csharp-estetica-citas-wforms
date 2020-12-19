@@ -10,6 +10,18 @@ namespace Controladores
 {
     public class clienteController
     {
+        public async Task<List<clientes>> getclienteByNameMatching(String text)
+        {
+            using (var db = new estetica_lupitaEntities())
+            {
+                var empleados = await db.clientes.Where(d => d.cl_nombrecompleto.Contains(text)).ToListAsync();
+                return empleados
+                        .OrderByDescending(o => o.idcliente)
+                        .ToList()
+                        .Where(f => f.cl_estatus != 0)
+                        .ToList();
+            }
+        }
 
         public async Task<clientes> obtenerPorId(int clienteId)
         {

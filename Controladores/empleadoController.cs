@@ -11,6 +11,29 @@ namespace Controladores
 {
     public class empleadoController
     {
+        public async Task<List<empleadoModel>> getempleadoByNameMatching(String text)
+        {
+            using (var db = new estetica_lupitaEntities())
+            {
+                var empleados = await (from empleado in db.empleados
+                                      where empleado.emp_nombrecompleto.Contains(text)
+                                      join puesto in db.puestos on empleado.emp_puesto equals puesto.idpuesto
+                                      select new empleadoModel
+                                      {
+                                          Id = empleado.idempleado,
+                                          NombreCompleto = empleado.emp_nombrecompleto,
+                                          Puesto = puesto.pst_descripcion,
+                                          Sueldo = empleado.emp_sueldo,
+                                          Telefono = empleado.emp_telefono,
+                                          Estatus = empleado.emp_estatus
+                                      }).ToListAsync();
+                return empleados
+                        .OrderByDescending(o => o.Id)
+                        .ToList()
+                        .Where(f => f.Estatus != 0)
+                        .ToList();
+            }
+        }
         public async Task<empleadoModel> obtenerPorId(int empleadoId)
         {
             using (var db = new estetica_lupitaEntities())
