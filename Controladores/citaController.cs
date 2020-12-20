@@ -33,7 +33,7 @@ namespace Controladores
                 return query.OrderByDescending(o => o.Id).ToList();
             }
         }
-        public async Task<List<citaModel>> getcitaByFolioMatching(int folio)
+        public async Task<List<citaModel>> getcitaByFolioMatching(string folio)
         {
             using (var db = new estetica_lupitaEntities())
             {
@@ -41,7 +41,7 @@ namespace Controladores
                                    join empleado in db.empleados on cita.ct_empleado equals empleado.idempleado
                                    join cliente in db.clientes on cita.ct_cliente equals cliente.idcliente
                                    join servicio in db.servicios on cita.ct_servicio equals servicio.idservicio
-                                   where cita.idcita == folio && cita.ct_estatus != 0
+                                   where cita.idcita.ToString().Contains(folio) && cita.ct_estatus != 0
                                    select new citaModel
                                    {
                                        Id = cita.idcita,
@@ -99,6 +99,7 @@ namespace Controladores
                 return query.OrderByDescending(o => o.Id).ToList();
             }
         }
+
         public async Task<citaModel> obtenerCitaPorId(int citaId)
         {
             using (var db = new estetica_lupitaEntities())
@@ -107,6 +108,7 @@ namespace Controladores
                                     join empleado in db.empleados on cita.ct_empleado equals empleado.idempleado
                                     join cliente in db.clientes on cita.ct_cliente equals cliente.idcliente
                                     join servicio in db.servicios on cita.ct_servicio equals servicio.idservicio
+                                   where cita.ct_estatus != 0 && cita.ct_estatus != 3
                                     select new citaModel
                                     {
                                         Id = cita.idcita,
@@ -116,8 +118,16 @@ namespace Controladores
                                         NombreCliente = cliente.cl_nombrecompleto,
                                         NombreEmpleado = empleado.emp_nombrecompleto,
                                         NombreServicio = servicio.sv_descripcion
-                                    }).ToListAsync();
-                return query[0];
+                                    }).FirstOrDefaultAsync();
+                return query;
+            }
+        }
+        public async Task<citas> obtenerCitaPorIdOriginal(int citaId)
+        {
+            using (var db = new estetica_lupitaEntities())
+            {
+                var cita = await db.citas.FirstOrDefaultAsync(c => c.idcita == citaId);
+                return cita;
             }
         }
 

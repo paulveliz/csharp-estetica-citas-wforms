@@ -78,5 +78,11 @@ namespace estetica_lupita
             Formularios.frmreporte Cs = new Formularios.frmreporte();
             Cs.Show();
         }
+
+        private void puntoDeVentaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Formularios.frmPuntoventa Cs = new Formularios.frmPuntoventa();
+            Cs.Show();
+        }
     }
 }

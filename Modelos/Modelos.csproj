@@ -97,6 +97,8 @@
       <DependentUpon>dbcontext.tt</DependentUpon>
     </Compile>
     <Compile Include="empleadoModel.cs" />
+    <Compile Include="FullVenta.cs" />
+    <Compile Include="notaventaDetalleModel.cs" />
     <Compile Include="notaventaModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

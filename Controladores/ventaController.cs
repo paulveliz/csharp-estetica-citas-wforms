@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Modelos;
 using System.Data.Entity;
@@ -11,24 +10,15 @@ namespace Controladores
 {
     public class ventaController
     {
-        public async Task<notaventaModel> obtenerPorId(int notaventaId)
+        public async Task<FullVenta> obtenerPorId(int notaventaId)
         {
             using (var db = new estetica_lupitaEntities())
             {
-                var detalles = await (from nvd in db.notaventa_detalle.Where(nv => nv.idnotaventa == notaventaId)
-                                        join servicio in db.servicios on nvd.nvd_servicio equals servicio.idservicio
-                                      select new ventaDetalle
-                                      {
-                                          Id = nvd.idnotaventa,
-                                          Servicio = servicio.sv_descripcion,
-                                          Precio = nvd.nvd_precio,
-                                          Cantidad = nvd.nvd_cantidad
-                                      }).ToListAsync();
-
-                var query = await (from notaventa in db.notaventa.Where(n => n.idnotaventa == notaventaId)
+                var query = await (from notaventa in db.notaventa
                                    join cita in db.citas on notaventa.nv_cita equals cita.idcita
                                    join cliente in db.clientes on notaventa.nv_cliente equals cliente.idcliente
                                    join empleado in db.empleados on notaventa.nv_cliente equals empleado.idempleado
+                                   where notaventa.idnotaventa == notaventaId
                                    select new notaventaModel
                                    {
                                        Id = notaventa.idnotaventa,
@@ -37,19 +27,12 @@ namespace Controladores
                                        Empleado = empleado.emp_nombrecompleto,
                                        Total = notaventa.nv_total,
                                        Estatus = notaventa.nv_estatus,
-                                       Detalle = detalles
-                                   }).ToListAsync();
-                return query[0];
-            }
-        }
+                                   }).FirstOrDefaultAsync();
 
-        public async Task<List<notaventaModel>> obtenerTodas()
-        {
-            using (var db = new estetica_lupitaEntities())
-            {
                 var detalles = await (from nvd in db.notaventa_detalle
                                       join servicio in db.servicios on nvd.nvd_servicio equals servicio.idservicio
-                                      select new ventaDetalle
+                                      where nvd.idnotaventa == notaventaId
+                                      select new notaventaDetalleModel
                                       {
                                           Id = nvd.idnotaventa,
                                           Servicio = servicio.sv_descripcion,
@@ -57,6 +40,15 @@ namespace Controladores
                                           Cantidad = nvd.nvd_cantidad
                                       }).ToListAsync();
 
+                // Retornar venta con su lista de detalles
+                return new FullVenta(nota: query, detalle: detalles);
+            }
+        }
+
+        public async Task<List<FullVenta>> obtenerTodas()
+        {
+            using (var db = new estetica_lupitaEntities())
+            {
                 var query = await (from notaventa in db.notaventa
                                    join cita in db.citas on notaventa.nv_cita equals cita.idcita
                                    join cliente in db.clientes on notaventa.nv_cliente equals cliente.idcliente
@@ -69,20 +61,11 @@ namespace Controladores
                                        Empleado = empleado.emp_nombrecompleto,
                                        Total = notaventa.nv_total,
                                        Estatus = notaventa.nv_estatus,
-                                       Detalle = detalles.Where(nvd => nvd.Id == notaventa.idnotaventa).ToList()
                                    }).ToListAsync();
-                return query.OrderByDescending(o => o.Id).ToList();
-            }
-        }
 
-        // TODO: Modificar DB para obtener por fechas. 
-        public async Task<List<notaventaModel>> obtenerPorFechas(DateTime from, DateTime to)
-        {
-            using (var db = new estetica_lupitaEntities())
-            {
                 var detalles = await (from nvd in db.notaventa_detalle
                                       join servicio in db.servicios on nvd.nvd_servicio equals servicio.idservicio
-                                      select new ventaDetalle
+                                      select new notaventaDetalleModel
                                       {
                                           Id = nvd.idnotaventa,
                                           Servicio = servicio.sv_descripcion,
@@ -90,10 +73,26 @@ namespace Controladores
                                           Cantidad = nvd.nvd_cantidad
                                       }).ToListAsync();
 
+                // Retornar lista de ventas con su lista de detalles
+                var fv = query.Select(v => {
+                    return new FullVenta(
+                        nota: v, 
+                        detalle: detalles.Where(d => d.Id == v.Id).ToList());
+                }).ToList();
+
+                return fv;
+            }
+        }
+
+        public async Task<List<FullVenta>> obtenerPorFechas(DateTime fromt, DateTime to)
+        {
+            using (var db = new estetica_lupitaEntities())
+            {
                 var query = await (from notaventa in db.notaventa
                                    join cita in db.citas on notaventa.nv_cita equals cita.idcita
                                    join cliente in db.clientes on notaventa.nv_cliente equals cliente.idcliente
                                    join empleado in db.empleados on notaventa.nv_cliente equals empleado.idempleado
+                                   where cita.ct_fecha >= fromt && cita.ct_fecha <= to
                                    select new notaventaModel
                                    {
                                        Id = notaventa.idnotaventa,
@@ -102,16 +101,37 @@ namespace Controladores
                                        Empleado = empleado.emp_nombrecompleto,
                                        Total = notaventa.nv_total,
                                        Estatus = notaventa.nv_estatus,
-                                       Detalle = detalles.Where(nvd => nvd.Id == notaventa.idnotaventa).ToList()
                                    }).ToListAsync();
-                return query.OrderByDescending(o => o.Id).ToList();
+
+                var detalles = await (from nvd in db.notaventa_detalle
+                                      join servicio in db.servicios on nvd.nvd_servicio equals servicio.idservicio
+                                      select new notaventaDetalleModel
+                                      {
+                                          Id = nvd.idnotaventa,
+                                          Servicio = servicio.sv_descripcion,
+                                          Precio = nvd.nvd_precio,
+                                          Cantidad = nvd.nvd_cantidad
+                                      }).ToListAsync();
+
+                // Retornar lista de ventas con su lista de detalles
+                var fv = query.Select(v => {
+                    return new FullVenta(
+                        nota: v,
+                        detalle: detalles.Where(d => d.Id == v.Id).ToList());
+                }).ToList().OrderByDescending(o =>
+                    o.NotaVenta.Id
+                ).ToList();
+
+                return fv;
             }
         }
-        public async Task<notaventaModel> crearNueva(notaventa nota, notaventa_detalle detalle)
+        public async Task<FullVenta> crearNueva(notaventa nota, notaventa_detalle detalle)
         {
             using (var db = new estetica_lupitaEntities())
             {
                 var notaventa = db.notaventa.Add(nota);
+                await db.SaveChangesAsync();
+                detalle.idnotaventa = notaventa.idnotaventa;
                 var notadetalle = db.notaventa_detalle.Add(detalle);
                 await db.SaveChangesAsync();
                 var newNota = await obtenerPorId(notaventa.idnotaventa);
@@ -123,10 +143,8 @@ namespace Controladores
         {
             using (var db =  new estetica_lupitaEntities())
             {
-                var nota = await db.notaventa.FindAsync(notaId);
+                var nota = await db.notaventa.FirstOrDefaultAsync(c => c.idnotaventa == notaId);
                 nota.nv_estatus = 0;
-                var nvd = await db.notaventa_detalle.Where(nv => nv.idnotaventa == notaId).ToListAsync();
-                nvd[0].nvd_estatus = 0;
                 await db.SaveChangesAsync();
                 return nota;
             }

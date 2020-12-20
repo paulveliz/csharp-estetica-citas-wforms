@@ -60,8 +60,8 @@ namespace estetica_lupita.Formularios
 
         private void frmCitas_Load(object sender, EventArgs e)
         {
-            obtenerCitas();
             obtenerServicios();
+            obtenerCitas();
         }
 
         private void btnempleado_Click(object sender, EventArgs e)
@@ -207,10 +207,18 @@ namespace estetica_lupita.Formularios
                 }
             }
         }
-
+        
+        private async void calcularImporte()
+        {
+            Servicio = (servicios)cboxservicio.SelectedItem;
+            var svCtrl = new servicioController();
+            var servicio = await svCtrl.obtenerPorId(Servicio.idservicio);
+            this.txtimporte.Text = (servicio.sv_precio * Convert.ToInt32( txtcantservicios.Value)).ToString();
+        }
         private void ajustarDgv()
         {
             dgvbase.Columns[0].Visible = true;
+            dgvbase.Columns[0].HeaderText = "Folio";
             dgvbase.Columns[1].HeaderText = "Empleado";
             dgvbase.Columns[2].HeaderText = "Cliente";
             dgvbase.Columns[3].HeaderText = "Servicio";
@@ -241,13 +249,13 @@ namespace estetica_lupita.Formularios
 
             if (rbnfolio.Checked)
             {
-                txtbusqueda.Clear();
                 if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
                 {
                     e.Handled = true;
                 }
+                if (string.IsNullOrEmpty(txtbusqueda.Text) || string.IsNullOrWhiteSpace(txtbusqueda.Text)) return;
                 this.Cursor = Cursors.WaitCursor;
-                var citas = await ctCtrl.getcitaByFolioMatching( Convert.ToInt32( txtbusqueda.Text ));
+                var citas = await ctCtrl.getcitaByFolioMatching( txtbusqueda.Text );
                 this.dgvbase.DataSource = citas;
                 ajustarDgv();
                 this.Cursor = Cursors.Default;
@@ -292,6 +300,16 @@ namespace estetica_lupita.Formularios
             {
                 MessageBox.Show("No se encontraron citas en el rango especificado.", "Busqueda por fechas");
             }
+        }
+
+        private void txtcantservicios_ValueChanged(object sender, EventArgs e)
+        {
+           calcularImporte();
+        }
+
+        private void cboxservicio_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            calcularImporte();
         }
     }
 }

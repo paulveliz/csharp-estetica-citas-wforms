@@ -48,13 +48,13 @@
             this.txtcliente = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.groupOrdenarcita = new System.Windows.Forms.GroupBox();
+            this.rdbcanceladas = new System.Windows.Forms.RadioButton();
             this.btnvisualizar = new System.Windows.Forms.Button();
             this.rdbpendientes = new System.Windows.Forms.RadioButton();
             this.rdbsatisfactorias = new System.Windows.Forms.RadioButton();
             this.rdbprogreso = new System.Windows.Forms.RadioButton();
             this.groupCitasRegistradas = new System.Windows.Forms.GroupBox();
             this.dgvbase = new System.Windows.Forms.DataGridView();
-            this.rdbcanceladas = new System.Windows.Forms.RadioButton();
             this.txtbusqueda = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -68,6 +68,9 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.btnporfechas = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
+            this.txtimporte = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.groupAgebdarCita.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtcantservicios)).BeginInit();
             this.groupOrdenarcita.SuspendLayout();
@@ -78,6 +81,9 @@
             // 
             // groupAgebdarCita
             // 
+            this.groupAgebdarCita.Controls.Add(this.label13);
+            this.groupAgebdarCita.Controls.Add(this.label12);
+            this.groupAgebdarCita.Controls.Add(this.txtimporte);
             this.groupAgebdarCita.Controls.Add(this.btncliente);
             this.groupAgebdarCita.Controls.Add(this.btnempleado);
             this.groupAgebdarCita.Controls.Add(this.btnagendar);
@@ -96,10 +102,10 @@
             this.groupAgebdarCita.Controls.Add(this.txtcliente);
             this.groupAgebdarCita.Controls.Add(this.label4);
             this.groupAgebdarCita.Location = new System.Drawing.Point(4, 4);
-            this.groupAgebdarCita.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupAgebdarCita.Margin = new System.Windows.Forms.Padding(4);
             this.groupAgebdarCita.Name = "groupAgebdarCita";
-            this.groupAgebdarCita.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupAgebdarCita.Size = new System.Drawing.Size(340, 363);
+            this.groupAgebdarCita.Padding = new System.Windows.Forms.Padding(4);
+            this.groupAgebdarCita.Size = new System.Drawing.Size(340, 379);
             this.groupAgebdarCita.TabIndex = 0;
             this.groupAgebdarCita.TabStop = false;
             this.groupAgebdarCita.Text = "Agendar nueva cita";
@@ -107,7 +113,7 @@
             // btncliente
             // 
             this.btncliente.Location = new System.Drawing.Point(289, 110);
-            this.btncliente.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btncliente.Margin = new System.Windows.Forms.Padding(4);
             this.btncliente.Name = "btncliente";
             this.btncliente.Size = new System.Drawing.Size(40, 25);
             this.btncliente.TabIndex = 32;
@@ -118,7 +124,7 @@
             // btnempleado
             // 
             this.btnempleado.Location = new System.Drawing.Point(289, 59);
-            this.btnempleado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnempleado.Margin = new System.Windows.Forms.Padding(4);
             this.btnempleado.Name = "btnempleado";
             this.btnempleado.Size = new System.Drawing.Size(40, 28);
             this.btnempleado.TabIndex = 31;
@@ -129,8 +135,8 @@
             // btnagendar
             // 
             this.btnagendar.Enabled = false;
-            this.btnagendar.Location = new System.Drawing.Point(62, 314);
-            this.btnagendar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnagendar.Location = new System.Drawing.Point(94, 340);
+            this.btnagendar.Margin = new System.Windows.Forms.Padding(4);
             this.btnagendar.Name = "btnagendar";
             this.btnagendar.Size = new System.Drawing.Size(142, 27);
             this.btnagendar.TabIndex = 30;
@@ -141,8 +147,8 @@
             // txtminuto
             // 
             this.txtminuto.Enabled = false;
-            this.txtminuto.Location = new System.Drawing.Point(155, 278);
-            this.txtminuto.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtminuto.Location = new System.Drawing.Point(187, 304);
+            this.txtminuto.Margin = new System.Windows.Forms.Padding(4);
             this.txtminuto.Name = "txtminuto";
             this.txtminuto.Size = new System.Drawing.Size(49, 22);
             this.txtminuto.TabIndex = 29;
@@ -152,7 +158,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(126, 282);
+            this.label7.Location = new System.Drawing.Point(158, 308);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(13, 17);
@@ -162,8 +168,8 @@
             // txthora
             // 
             this.txthora.Enabled = false;
-            this.txthora.Location = new System.Drawing.Point(65, 278);
-            this.txthora.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txthora.Location = new System.Drawing.Point(97, 304);
+            this.txthora.Margin = new System.Windows.Forms.Padding(4);
             this.txthora.Name = "txthora";
             this.txthora.Size = new System.Drawing.Size(49, 22);
             this.txthora.TabIndex = 26;
@@ -172,7 +178,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 278);
+            this.label6.Location = new System.Drawing.Point(44, 304);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(39, 17);
@@ -182,7 +188,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 199);
+            this.label5.Location = new System.Drawing.Point(16, 254);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(47, 17);
@@ -192,8 +198,8 @@
             // txtfecha
             // 
             this.txtfecha.Enabled = false;
-            this.txtfecha.Location = new System.Drawing.Point(8, 219);
-            this.txtfecha.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtfecha.Location = new System.Drawing.Point(12, 274);
+            this.txtfecha.Margin = new System.Windows.Forms.Padding(4);
             this.txtfecha.Name = "txtfecha";
             this.txtfecha.Size = new System.Drawing.Size(280, 22);
             this.txtfecha.TabIndex = 23;
@@ -212,7 +218,7 @@
             // 
             this.txtcantservicios.Enabled = false;
             this.txtcantservicios.Location = new System.Drawing.Point(277, 159);
-            this.txtcantservicios.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtcantservicios.Margin = new System.Windows.Forms.Padding(4);
             this.txtcantservicios.Name = "txtcantservicios";
             this.txtcantservicios.Size = new System.Drawing.Size(52, 22);
             this.txtcantservicios.TabIndex = 21;
@@ -221,6 +227,7 @@
             0,
             0,
             0});
+            this.txtcantservicios.ValueChanged += new System.EventHandler(this.txtcantservicios_ValueChanged);
             // 
             // cboxservicio
             // 
@@ -228,10 +235,11 @@
             this.cboxservicio.Enabled = false;
             this.cboxservicio.FormattingEnabled = true;
             this.cboxservicio.Location = new System.Drawing.Point(8, 158);
-            this.cboxservicio.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cboxservicio.Margin = new System.Windows.Forms.Padding(4);
             this.cboxservicio.Name = "cboxservicio";
             this.cboxservicio.Size = new System.Drawing.Size(261, 24);
             this.cboxservicio.TabIndex = 20;
+            this.cboxservicio.SelectedIndexChanged += new System.EventHandler(this.cboxservicio_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -256,7 +264,7 @@
             // txtempleado
             // 
             this.txtempleado.Location = new System.Drawing.Point(8, 62);
-            this.txtempleado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtempleado.Margin = new System.Windows.Forms.Padding(4);
             this.txtempleado.Name = "txtempleado";
             this.txtempleado.ReadOnly = true;
             this.txtempleado.Size = new System.Drawing.Size(273, 22);
@@ -265,7 +273,7 @@
             // txtcliente
             // 
             this.txtcliente.Location = new System.Drawing.Point(8, 110);
-            this.txtcliente.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtcliente.Margin = new System.Windows.Forms.Padding(4);
             this.txtcliente.Name = "txtcliente";
             this.txtcliente.ReadOnly = true;
             this.txtcliente.Size = new System.Drawing.Size(273, 22);
@@ -289,18 +297,29 @@
             this.groupOrdenarcita.Controls.Add(this.rdbsatisfactorias);
             this.groupOrdenarcita.Controls.Add(this.rdbprogreso);
             this.groupOrdenarcita.Location = new System.Drawing.Point(4, 391);
-            this.groupOrdenarcita.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupOrdenarcita.Margin = new System.Windows.Forms.Padding(4);
             this.groupOrdenarcita.Name = "groupOrdenarcita";
-            this.groupOrdenarcita.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupOrdenarcita.Padding = new System.Windows.Forms.Padding(4);
             this.groupOrdenarcita.Size = new System.Drawing.Size(340, 148);
             this.groupOrdenarcita.TabIndex = 1;
             this.groupOrdenarcita.TabStop = false;
             this.groupOrdenarcita.Text = "Ordenar citas";
             // 
+            // rdbcanceladas
+            // 
+            this.rdbcanceladas.AutoSize = true;
+            this.rdbcanceladas.Location = new System.Drawing.Point(12, 119);
+            this.rdbcanceladas.Margin = new System.Windows.Forms.Padding(4);
+            this.rdbcanceladas.Name = "rdbcanceladas";
+            this.rdbcanceladas.Size = new System.Drawing.Size(136, 21);
+            this.rdbcanceladas.TabIndex = 32;
+            this.rdbcanceladas.Text = "Citas canceladas";
+            this.rdbcanceladas.UseVisualStyleBackColor = true;
+            // 
             // btnvisualizar
             // 
             this.btnvisualizar.Location = new System.Drawing.Point(202, 105);
-            this.btnvisualizar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnvisualizar.Margin = new System.Windows.Forms.Padding(4);
             this.btnvisualizar.Name = "btnvisualizar";
             this.btnvisualizar.Size = new System.Drawing.Size(131, 35);
             this.btnvisualizar.TabIndex = 31;
@@ -312,7 +331,7 @@
             // 
             this.rdbpendientes.AutoSize = true;
             this.rdbpendientes.Location = new System.Drawing.Point(12, 90);
-            this.rdbpendientes.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rdbpendientes.Margin = new System.Windows.Forms.Padding(4);
             this.rdbpendientes.Name = "rdbpendientes";
             this.rdbpendientes.Size = new System.Drawing.Size(134, 21);
             this.rdbpendientes.TabIndex = 4;
@@ -323,7 +342,7 @@
             // 
             this.rdbsatisfactorias.AutoSize = true;
             this.rdbsatisfactorias.Location = new System.Drawing.Point(12, 62);
-            this.rdbsatisfactorias.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rdbsatisfactorias.Margin = new System.Windows.Forms.Padding(4);
             this.rdbsatisfactorias.Name = "rdbsatisfactorias";
             this.rdbsatisfactorias.Size = new System.Drawing.Size(147, 21);
             this.rdbsatisfactorias.TabIndex = 3;
@@ -335,7 +354,7 @@
             this.rdbprogreso.AutoSize = true;
             this.rdbprogreso.Checked = true;
             this.rdbprogreso.Location = new System.Drawing.Point(12, 32);
-            this.rdbprogreso.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rdbprogreso.Margin = new System.Windows.Forms.Padding(4);
             this.rdbprogreso.Name = "rdbprogreso";
             this.rdbprogreso.Size = new System.Drawing.Size(141, 21);
             this.rdbprogreso.TabIndex = 2;
@@ -347,9 +366,9 @@
             // 
             this.groupCitasRegistradas.Controls.Add(this.dgvbase);
             this.groupCitasRegistradas.Location = new System.Drawing.Point(352, 172);
-            this.groupCitasRegistradas.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupCitasRegistradas.Margin = new System.Windows.Forms.Padding(4);
             this.groupCitasRegistradas.Name = "groupCitasRegistradas";
-            this.groupCitasRegistradas.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupCitasRegistradas.Padding = new System.Windows.Forms.Padding(4);
             this.groupCitasRegistradas.Size = new System.Drawing.Size(994, 380);
             this.groupCitasRegistradas.TabIndex = 2;
             this.groupCitasRegistradas.TabStop = false;
@@ -372,17 +391,6 @@
             this.dgvbase.Size = new System.Drawing.Size(986, 357);
             this.dgvbase.TabIndex = 1;
             this.dgvbase.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvbase_CellDoubleClick);
-            // 
-            // rdbcanceladas
-            // 
-            this.rdbcanceladas.AutoSize = true;
-            this.rdbcanceladas.Location = new System.Drawing.Point(12, 119);
-            this.rdbcanceladas.Margin = new System.Windows.Forms.Padding(4);
-            this.rdbcanceladas.Name = "rdbcanceladas";
-            this.rdbcanceladas.Size = new System.Drawing.Size(136, 21);
-            this.rdbcanceladas.TabIndex = 32;
-            this.rdbcanceladas.Text = "Citas canceladas";
-            this.rdbcanceladas.UseVisualStyleBackColor = true;
             // 
             // txtbusqueda
             // 
@@ -522,6 +530,35 @@
             this.btnporfechas.UseVisualStyleBackColor = true;
             this.btnporfechas.Click += new System.EventHandler(this.btnporfechas_Click);
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(26, 190);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(55, 17);
+            this.label12.TabIndex = 33;
+            this.label12.Text = "Importe";
+            // 
+            // txtimporte
+            // 
+            this.txtimporte.Location = new System.Drawing.Point(29, 211);
+            this.txtimporte.Margin = new System.Windows.Forms.Padding(4);
+            this.txtimporte.Name = "txtimporte";
+            this.txtimporte.ReadOnly = true;
+            this.txtimporte.Size = new System.Drawing.Size(75, 22);
+            this.txtimporte.TabIndex = 34;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(9, 213);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(16, 17);
+            this.label13.TabIndex = 35;
+            this.label13.Text = "$";
+            // 
             // frmCitas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -538,7 +575,7 @@
             this.Controls.Add(this.groupOrdenarcita);
             this.Controls.Add(this.groupAgebdarCita);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmCitas";
@@ -600,5 +637,8 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button btnporfechas;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox txtimporte;
     }
 }

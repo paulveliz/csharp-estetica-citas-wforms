@@ -15,7 +15,7 @@ namespace Controladores
         {
             using (var db = new estetica_lupitaEntities())
             {
-                var servicio = await db.servicios.FindAsync(servicioId);
+                var servicio = await db.servicios.FirstOrDefaultAsync( c => c.idservicio == servicioId);
                 return servicio;
             }
         }
