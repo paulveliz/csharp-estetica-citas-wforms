@@ -11,6 +11,38 @@ namespace Controladores
 {
     public class citaController
     {
+        public async Task<FullCita> getFullCita(int citaId)
+        {
+            using (var db = new estetica_lupitaEntities())
+            {
+                var citaM = await (from cita in db.citas.Where(c => c.idcita == citaId)
+                                   join empleado in db.empleados on cita.ct_empleado equals empleado.idempleado
+                                   join cliente in db.clientes on cita.ct_cliente equals cliente.idcliente
+                                   select new citaModel
+                                   {
+                                       Id = cita.idcita,
+                                       Fecha = cita.ct_fecha,
+                                       Hora = cita.ct_hora,
+                                       NombreCliente = cliente.cl_nombrecompleto,
+                                       NombreEmpleado = empleado.emp_nombrecompleto,
+                                   }).FirstOrDefaultAsync();
+                var citaD = await (from citaDetail in db.cita_detalle.Where(c => c.sv_cita == citaId)
+                                   join servicio in db.servicios on citaDetail.sv_id equals servicio.idservicio
+                                   select new citaDetalleModel
+                                   {
+                                       Id = citaDetail.idserviciodetalle,
+                                       Cantidad = citaDetail.sv_cant,
+                                       Precio = citaDetail.sv_precio,
+                                       Servicio = servicio.sv_descripcion,
+                                       ServicioId = servicio.idservicio,
+                                       Importe = citaDetail.sv_importe
+                                   }).ToListAsync();
+                var fullCita = new FullCita(citaM, citaD);
+
+                return fullCita;
+            }
+        }
+
         public async Task<List<citaModel>> getcitaByClientNameMatching(String text)
         {
             using (var db = new estetica_lupitaEntities())
@@ -18,17 +50,14 @@ namespace Controladores
                 var query = await (from cita in db.citas
                                    join empleado in db.empleados on cita.ct_empleado equals empleado.idempleado
                                    join cliente in db.clientes on cita.ct_cliente equals cliente.idcliente
-                                   join servicio in db.servicios on cita.ct_servicio equals servicio.idservicio
                                    where cliente.cl_nombrecompleto.Contains(text) && cita.ct_estatus != 0
                                    select new citaModel
                                    {
                                        Id = cita.idcita,
-                                       CantidadServicios = cita.ct_cantservicios,
                                        Fecha = cita.ct_fecha,
                                        Hora = cita.ct_hora,
                                        NombreCliente = cliente.cl_nombrecompleto,
                                        NombreEmpleado = empleado.emp_nombrecompleto,
-                                       NombreServicio = servicio.sv_descripcion
                                    }).ToListAsync();
                 return query.OrderByDescending(o => o.Id).ToList();
             }
@@ -40,17 +69,14 @@ namespace Controladores
                 var query = await (from cita in db.citas
                                    join empleado in db.empleados on cita.ct_empleado equals empleado.idempleado
                                    join cliente in db.clientes on cita.ct_cliente equals cliente.idcliente
-                                   join servicio in db.servicios on cita.ct_servicio equals servicio.idservicio
                                    where cita.idcita.ToString().Contains(folio) && cita.ct_estatus != 0
                                    select new citaModel
                                    {
                                        Id = cita.idcita,
-                                       CantidadServicios = cita.ct_cantservicios,
                                        Fecha = cita.ct_fecha,
                                        Hora = cita.ct_hora,
                                        NombreCliente = cliente.cl_nombrecompleto,
                                        NombreEmpleado = empleado.emp_nombrecompleto,
-                                       NombreServicio = servicio.sv_descripcion
                                    }).ToListAsync();
                 return query.OrderByDescending(o => o.Id).ToList();
             }
@@ -62,17 +88,16 @@ namespace Controladores
                 var query = await (from cita in db.citas
                                    join empleado in db.empleados on cita.ct_empleado equals empleado.idempleado
                                    join cliente in db.clientes on cita.ct_cliente equals cliente.idcliente
-                                   join servicio in db.servicios on cita.ct_servicio equals servicio.idservicio
-                                   where servicio.sv_descripcion.Contains(text) && cita.ct_estatus != 0
+                                   join detalle in db.cita_detalle on cita.idcita equals detalle.sv_cita
+                                   join servicios in db.servicios on detalle.sv_id equals servicios.idservicio
+                                   where servicios.sv_descripcion.Contains(text) && cita.ct_estatus != 0
                                    select new citaModel
                                    {
                                        Id = cita.idcita,
-                                       CantidadServicios = cita.ct_cantservicios,
                                        Fecha = cita.ct_fecha,
                                        Hora = cita.ct_hora,
                                        NombreCliente = cliente.cl_nombrecompleto,
                                        NombreEmpleado = empleado.emp_nombrecompleto,
-                                       NombreServicio = servicio.sv_descripcion
                                    }).ToListAsync();
                 return query.OrderByDescending(o => o.Id).ToList();
             }
@@ -84,17 +109,14 @@ namespace Controladores
                 var query = await (from cita in db.citas
                                    join empleado in db.empleados on cita.ct_empleado equals empleado.idempleado
                                    join cliente in db.clientes on cita.ct_cliente equals cliente.idcliente
-                                   join servicio in db.servicios on cita.ct_servicio equals servicio.idservicio
                                    where empleado.emp_nombrecompleto.Contains(text) && cita.ct_estatus != 0
                                    select new citaModel
                                    {
                                        Id = cita.idcita,
-                                       CantidadServicios = cita.ct_cantservicios,
                                        Fecha = cita.ct_fecha,
                                        Hora = cita.ct_hora,
                                        NombreCliente = cliente.cl_nombrecompleto,
                                        NombreEmpleado = empleado.emp_nombrecompleto,
-                                       NombreServicio = servicio.sv_descripcion
                                    }).ToListAsync();
                 return query.OrderByDescending(o => o.Id).ToList();
             }
@@ -107,17 +129,14 @@ namespace Controladores
                 var query = await (from cita in db.citas.Where(c => c.idcita == citaId)
                                     join empleado in db.empleados on cita.ct_empleado equals empleado.idempleado
                                     join cliente in db.clientes on cita.ct_cliente equals cliente.idcliente
-                                    join servicio in db.servicios on cita.ct_servicio equals servicio.idservicio
                                    where cita.ct_estatus != 0 && cita.ct_estatus != 3
                                     select new citaModel
                                     {
                                         Id = cita.idcita,
-                                        CantidadServicios = cita.ct_cantservicios,
                                         Fecha = cita.ct_fecha,
                                         Hora = cita.ct_hora,
                                         NombreCliente = cliente.cl_nombrecompleto,
                                         NombreEmpleado = empleado.emp_nombrecompleto,
-                                        NombreServicio = servicio.sv_descripcion
                                     }).FirstOrDefaultAsync();
                 return query;
             }
@@ -138,17 +157,14 @@ namespace Controladores
                 var query = await (from cita in db.citas.Take(100)
                                    join empleado in db.empleados on cita.ct_empleado equals empleado.idempleado
                                    join cliente in db.clientes on cita.ct_cliente equals cliente.idcliente
-                                   join servicio in db.servicios on cita.ct_servicio equals servicio.idservicio
                                    where cita.ct_estatus != 0
                                    select new citaModel
                                    {
                                        Id = cita.idcita,
-                                       CantidadServicios = cita.ct_cantservicios,
                                        Fecha = cita.ct_fecha,
                                        Hora = cita.ct_hora,
                                        NombreCliente = cliente.cl_nombrecompleto,
                                        NombreEmpleado = empleado.emp_nombrecompleto,
-                                       NombreServicio = servicio.sv_descripcion
                                    }).ToListAsync();
                 return query.OrderByDescending(o => o.Id)
                             .ToList();
@@ -164,27 +180,29 @@ namespace Controladores
                                     )
                                    join empleado in db.empleados on cita.ct_empleado equals empleado.idempleado
                                    join cliente in db.clientes on cita.ct_cliente equals cliente.idcliente
-                                   join servicio in db.servicios on cita.ct_servicio equals servicio.idservicio
                                    where cita.ct_estatus != 0
                                    select new citaModel
                                    {
                                        Id = cita.idcita,
-                                       CantidadServicios = cita.ct_cantservicios,
                                        Fecha = cita.ct_fecha,
                                        Hora = cita.ct_hora,
                                        NombreCliente = cliente.cl_nombrecompleto,
                                        NombreEmpleado = empleado.emp_nombrecompleto,
-                                       NombreServicio = servicio.sv_descripcion
                                    }).ToListAsync();
                 return query.OrderByDescending(o => o.Id).ToList();
             }
         }
 
-        public async Task<citas> crearCita(citas cita)
+        public async Task<citas> crearCita(citas cita, List<cita_detalle> detalle)
         {
             using (var db = new estetica_lupitaEntities())
             {
                 var result = db.citas.Add(cita);
+                await db.SaveChangesAsync();
+                detalle.ForEach(e =>
+                    e.sv_cita = result.idcita
+                );
+                db.cita_detalle.AddRange(detalle);
                 await db.SaveChangesAsync();
                 return result;
             }
@@ -195,12 +213,10 @@ namespace Controladores
             using (var db = new estetica_lupitaEntities())
             {
                 var res = await db.citas.FindAsync(cita.idcita);
-                res.ct_cantservicios = cita.ct_cantservicios;
                 res.ct_cliente = cita.ct_cliente;
                 res.ct_empleado = cita.ct_empleado;
                 res.ct_fecha = cita.ct_fecha;
                 res.ct_hora = cita.ct_hora;
-                res.ct_servicio = cita.ct_servicio;
                 res.ct_estatus = cita.ct_estatus;
                 await db.SaveChangesAsync();
                 return res;
@@ -233,16 +249,13 @@ namespace Controladores
                 var query = await (from cita in db.citas.Where(c => c.ct_estatus == 2)
                                    join empleado in db.empleados on cita.ct_empleado equals empleado.idempleado
                                    join cliente in db.clientes on cita.ct_cliente equals cliente.idcliente
-                                   join servicio in db.servicios on cita.ct_servicio equals servicio.idservicio
                                    select new citaModel
                                    {
                                        Id = cita.idcita,
-                                       CantidadServicios = cita.ct_cantservicios,
                                        Fecha = cita.ct_fecha,
                                        Hora = cita.ct_hora,
                                        NombreCliente = cliente.cl_nombrecompleto,
                                        NombreEmpleado = empleado.emp_nombrecompleto,
-                                       NombreServicio = servicio.sv_descripcion
                                    }).ToListAsync();
                 return query.OrderByDescending(o => o.Id).ToList();
             }
@@ -255,16 +268,13 @@ namespace Controladores
                 var query = await (from cita in db.citas.Where(c => c.ct_estatus == 3)
                                    join empleado in db.empleados on cita.ct_empleado equals empleado.idempleado
                                    join cliente in db.clientes on cita.ct_cliente equals cliente.idcliente
-                                   join servicio in db.servicios on cita.ct_servicio equals servicio.idservicio
                                    select new citaModel
                                    {
                                        Id = cita.idcita,
-                                       CantidadServicios = cita.ct_cantservicios,
                                        Fecha = cita.ct_fecha,
                                        Hora = cita.ct_hora,
                                        NombreCliente = cliente.cl_nombrecompleto,
                                        NombreEmpleado = empleado.emp_nombrecompleto,
-                                       NombreServicio = servicio.sv_descripcion
                                    }).ToListAsync();
                 return query;
             }
@@ -277,16 +287,13 @@ namespace Controladores
                 var query = await (from cita in db.citas.Where(c => c.ct_estatus == 1)
                                    join empleado in db.empleados on cita.ct_empleado equals empleado.idempleado
                                    join cliente in db.clientes on cita.ct_cliente equals cliente.idcliente
-                                   join servicio in db.servicios on cita.ct_servicio equals servicio.idservicio
                                    select new citaModel
                                    {
                                        Id = cita.idcita,
-                                       CantidadServicios = cita.ct_cantservicios,
                                        Fecha = cita.ct_fecha,
                                        Hora = cita.ct_hora,
                                        NombreCliente = cliente.cl_nombrecompleto,
                                        NombreEmpleado = empleado.emp_nombrecompleto,
-                                       NombreServicio = servicio.sv_descripcion
                                    }).ToListAsync();
                 return query.OrderByDescending(o => o.Id).ToList();
             }
@@ -298,16 +305,13 @@ namespace Controladores
                 var query = await (from cita in db.citas.Where(c => c.ct_estatus == 0)
                                    join empleado in db.empleados on cita.ct_empleado equals empleado.idempleado
                                    join cliente in db.clientes on cita.ct_cliente equals cliente.idcliente
-                                   join servicio in db.servicios on cita.ct_servicio equals servicio.idservicio
                                    select new citaModel
                                    {
                                        Id = cita.idcita,
-                                       CantidadServicios = cita.ct_cantservicios,
                                        Fecha = cita.ct_fecha,
                                        Hora = cita.ct_hora,
                                        NombreCliente = cliente.cl_nombrecompleto,
                                        NombreEmpleado = empleado.emp_nombrecompleto,
-                                       NombreServicio = servicio.sv_descripcion
                                    }).ToListAsync();
                 return query.OrderByDescending(o => o.Id).ToList();
             }

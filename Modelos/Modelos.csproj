@@ -53,11 +53,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="citaDetalleModel.cs" />
     <Compile Include="citaModel.cs" />
     <Compile Include="EF\auditorias.cs">
       <DependentUpon>dbcontext.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\citas.cs">
+      <DependentUpon>dbcontext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\cita_detalle.cs">
       <DependentUpon>dbcontext.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\clientes.cs">
@@ -97,12 +101,12 @@
       <DependentUpon>dbcontext.tt</DependentUpon>
     </Compile>
     <Compile Include="empleadoModel.cs" />
+    <Compile Include="FullCita.cs" />
     <Compile Include="FullVenta.cs" />
     <Compile Include="notaventaDetalleModel.cs" />
     <Compile Include="notaventaModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <EntityDeploy Include="EF\dbcontext.edmx">
@@ -115,6 +119,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
     <Content Include="EF\dbcontext.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>dbcontext.edmx</DependentUpon>
@@ -125,9 +133,6 @@
       <DependentUpon>dbcontext.edmx</DependentUpon>
       <LastGenOutput>dbcontext.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

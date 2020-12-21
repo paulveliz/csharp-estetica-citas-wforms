@@ -11,9 +11,8 @@ namespace Modelos
         public int Id { get; set; }
         public string NombreEmpleado { get; set; }
         public string NombreCliente { get; set; }
-        public string NombreServicio { get; set; }
-        public int CantidadServicios { get; set; }
         public DateTime Fecha { get; set; }
         public TimeSpan Hora { get; set; }
+        public int Estatus { get; set; }
     }
 }

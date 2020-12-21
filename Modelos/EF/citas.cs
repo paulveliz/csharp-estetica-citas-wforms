@@ -17,22 +17,22 @@ namespace Modelos.EF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public citas()
         {
+            this.cita_detalle = new HashSet<cita_detalle>();
             this.notaventa = new HashSet<notaventa>();
         }
     
         public int idcita { get; set; }
         public short ct_empleado { get; set; }
         public short ct_cliente { get; set; }
-        public short ct_servicio { get; set; }
-        public short ct_cantservicios { get; set; }
         public System.DateTime ct_fecha { get; set; }
         public System.TimeSpan ct_hora { get; set; }
         public short ct_estatus { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<cita_detalle> cita_detalle { get; set; }
         public virtual clientes clientes { get; set; }
         public virtual empleados empleados { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<notaventa> notaventa { get; set; }
-        public virtual servicios servicios { get; set; }
     }
 }

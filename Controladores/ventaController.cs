@@ -125,16 +125,20 @@ namespace Controladores
                 return fv;
             }
         }
-        public async Task<FullVenta> crearNueva(notaventa nota, notaventa_detalle detalle)
+        public async Task<FullVenta> crearNueva(notaventa nota, List<notaventa_detalle> detalle)
         {
             using (var db = new estetica_lupitaEntities())
             {
                 var notaventa = db.notaventa.Add(nota);
                 await db.SaveChangesAsync();
-                detalle.idnotaventa = notaventa.idnotaventa;
-                var notadetalle = db.notaventa_detalle.Add(detalle);
+                detalle.ForEach(d =>
+                    d.idnotaventa = notaventa.idnotaventa
+                );
+                db.notaventa_detalle.AddRange(detalle);
                 await db.SaveChangesAsync();
                 var newNota = await obtenerPorId(notaventa.idnotaventa);
+                var ctCtrl = new citaController();
+                await ctCtrl.cambiarEstadoDeCita(notaventa.nv_cita, 3);
                 return newNota;
             }
         }

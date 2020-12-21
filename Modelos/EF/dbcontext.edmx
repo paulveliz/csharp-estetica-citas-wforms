@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="estetica_lupita_db.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="estetica_lupitaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="auditorias">
           <Key>
             <PropertyRef Name="idauditoria" />
@@ -14,6 +14,17 @@
           <Property Name="fecha" Type="varchar(max)" Nullable="false" />
           <Property Name="hora" Type="varchar(max)" Nullable="false" />
         </EntityType>
+        <EntityType Name="cita_detalle">
+          <Key>
+            <PropertyRef Name="idserviciodetalle" />
+          </Key>
+          <Property Name="idserviciodetalle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sv_id" Type="smallint" Nullable="false" />
+          <Property Name="sv_cant" Type="int" Nullable="false" />
+          <Property Name="sv_precio" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="sv_importe" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="sv_cita" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="citas">
           <Key>
             <PropertyRef Name="idcita" />
@@ -21,8 +32,6 @@
           <Property Name="idcita" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ct_empleado" Type="smallint" Nullable="false" />
           <Property Name="ct_cliente" Type="smallint" Nullable="false" />
-          <Property Name="ct_servicio" Type="smallint" Nullable="false" />
-          <Property Name="ct_cantservicios" Type="smallint" Nullable="false" />
           <Property Name="ct_fecha" Type="date" Nullable="false" />
           <Property Name="ct_hora" Type="time" Precision="7" Nullable="false" />
           <Property Name="ct_estatus" Type="smallint" Nullable="false" />
@@ -44,7 +53,7 @@
           <Property Name="idempleado" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="emp_nombrecompleto" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="emp_telefono" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="emp_sueldo" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="emp_sueldo" Type="decimal" Precision="7" Scale="2" Nullable="false" />
           <Property Name="emp_puesto" Type="smallint" Nullable="false" />
           <Property Name="emp_estatus" Type="smallint" Nullable="false" />
         </EntityType>
@@ -53,27 +62,22 @@
             <PropertyRef Name="idnotaventa" />
           </Key>
           <Property Name="idnotaventa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="nv_total" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="nv_total" Type="decimal" Precision="6" Scale="2" Nullable="false" />
           <Property Name="nv_cita" Type="int" Nullable="false" />
           <Property Name="nv_cliente" Type="smallint" Nullable="false" />
           <Property Name="nv_empleado" Type="smallint" Nullable="false" />
           <Property Name="nv_estatus" Type="smallint" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'estetica_lupita.dbo.notaventa_detalle' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="notaventa_detalle">
           <Key>
-            <PropertyRef Name="idnotaventa" />
-            <PropertyRef Name="nvd_servicio" />
-            <PropertyRef Name="nvd_precio" />
-            <PropertyRef Name="nvd_cantidad" />
-            <PropertyRef Name="nvd_estatus" />
+            <PropertyRef Name="idnotaventadetalle" />
           </Key>
           <Property Name="idnotaventa" Type="int" Nullable="false" />
           <Property Name="nvd_servicio" Type="smallint" Nullable="false" />
-          <Property Name="nvd_precio" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="nvd_precio" Type="decimal" Precision="6" Scale="2" Nullable="false" />
           <Property Name="nvd_cantidad" Type="smallint" Nullable="false" />
           <Property Name="nvd_estatus" Type="smallint" Nullable="false" />
+          <Property Name="idnotaventadetalle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="puestos">
           <Key>
@@ -89,7 +93,7 @@ advertencia 6002: La tabla o vista 'estetica_lupita.dbo.notaventa_detalle' no ti
           </Key>
           <Property Name="idservicio" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="sv_descripcion" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="sv_precio" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="sv_precio" Type="decimal" Precision="6" Scale="2" Nullable="false" />
           <Property Name="sv_estatus" Type="smallint" Nullable="false" />
         </EntityType>
         <EntityType Name="usuarios">
@@ -100,6 +104,30 @@ advertencia 6002: La tabla o vista 'estetica_lupita.dbo.notaventa_detalle' no ti
           <Property Name="usuario_name" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="usuario_pass" Type="varchar" MaxLength="45" Nullable="false" />
         </EntityType>
+        <Association Name="fk_svd_ct">
+          <End Role="citas" Type="Self.citas" Multiplicity="1" />
+          <End Role="cita_detalle" Type="Self.cita_detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="citas">
+              <PropertyRef Name="idcita" />
+            </Principal>
+            <Dependent Role="cita_detalle">
+              <PropertyRef Name="sv_cita" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_svd_sv">
+          <End Role="servicios" Type="Self.servicios" Multiplicity="1" />
+          <End Role="cita_detalle" Type="Self.cita_detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="servicios">
+              <PropertyRef Name="idservicio" />
+            </Principal>
+            <Dependent Role="cita_detalle">
+              <PropertyRef Name="sv_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fkcliente">
           <End Role="clientes" Type="Self.clientes" Multiplicity="1" />
           <End Role="citas" Type="Self.citas" Multiplicity="*" />
@@ -196,36 +224,25 @@ advertencia 6002: La tabla o vista 'estetica_lupita.dbo.notaventa_detalle' no ti
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fkservicio">
-          <End Role="servicios" Type="Self.servicios" Multiplicity="1" />
-          <End Role="citas" Type="Self.citas" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="servicios">
-              <PropertyRef Name="idservicio" />
-            </Principal>
-            <Dependent Role="citas">
-              <PropertyRef Name="ct_servicio" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="estetica_lupita_dbStoreContainer">
+        <EntityContainer Name="estetica_lupitaModelStoreContainer">
           <EntitySet Name="auditorias" EntityType="Self.auditorias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cita_detalle" EntityType="Self.cita_detalle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="citas" EntityType="Self.citas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="clientes" EntityType="Self.clientes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="empleados" EntityType="Self.empleados" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="notaventa" EntityType="Self.notaventa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="notaventa_detalle" EntityType="Self.notaventa_detalle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="puestos" EntityType="Self.puestos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="servicios" EntityType="Self.servicios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="usuarios" EntityType="Self.usuarios" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="notaventa_detalle" EntityType="Self.notaventa_detalle" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [notaventa_detalle].[idnotaventa] AS [idnotaventa], 
-    [notaventa_detalle].[nvd_servicio] AS [nvd_servicio], 
-    [notaventa_detalle].[nvd_precio] AS [nvd_precio], 
-    [notaventa_detalle].[nvd_cantidad] AS [nvd_cantidad], 
-    [notaventa_detalle].[nvd_estatus] AS [nvd_estatus]
-    FROM [dbo].[notaventa_detalle] AS [notaventa_detalle]</DefiningQuery>
-          </EntitySet>
+          <AssociationSet Name="fk_svd_ct" Association="Self.fk_svd_ct">
+            <End Role="citas" EntitySet="citas" />
+            <End Role="cita_detalle" EntitySet="cita_detalle" />
+          </AssociationSet>
+          <AssociationSet Name="fk_svd_sv" Association="Self.fk_svd_sv">
+            <End Role="servicios" EntitySet="servicios" />
+            <End Role="cita_detalle" EntitySet="cita_detalle" />
+          </AssociationSet>
           <AssociationSet Name="fkcliente" Association="Self.fkcliente">
             <End Role="clientes" EntitySet="clientes" />
             <End Role="citas" EntitySet="citas" />
@@ -258,16 +275,12 @@ advertencia 6002: La tabla o vista 'estetica_lupita.dbo.notaventa_detalle' no ti
             <End Role="servicios" EntitySet="servicios" />
             <End Role="notaventa_detalle" EntitySet="notaventa_detalle" />
           </AssociationSet>
-          <AssociationSet Name="fkservicio" Association="Self.fkservicio">
-            <End Role="servicios" EntitySet="servicios" />
-            <End Role="citas" EntitySet="citas" />
-          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="estetica_lupita_db" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="estetica_lupitaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="auditorias">
           <Key>
             <PropertyRef Name="idauditoria" />
@@ -277,6 +290,19 @@ advertencia 6002: La tabla o vista 'estetica_lupita.dbo.notaventa_detalle' no ti
           <Property Name="fecha" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="hora" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
+        <EntityType Name="cita_detalle">
+          <Key>
+            <PropertyRef Name="idserviciodetalle" />
+          </Key>
+          <Property Name="idserviciodetalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sv_id" Type="Int16" Nullable="false" />
+          <Property Name="sv_cant" Type="Int32" Nullable="false" />
+          <Property Name="sv_precio" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="sv_importe" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="sv_cita" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="citas" Relationship="Self.fk_svd_ct" FromRole="cita_detalle" ToRole="citas" />
+          <NavigationProperty Name="servicios" Relationship="Self.fk_svd_sv" FromRole="cita_detalle" ToRole="servicios" />
+        </EntityType>
         <EntityType Name="citas">
           <Key>
             <PropertyRef Name="idcita" />
@@ -284,15 +310,13 @@ advertencia 6002: La tabla o vista 'estetica_lupita.dbo.notaventa_detalle' no ti
           <Property Name="idcita" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ct_empleado" Type="Int16" Nullable="false" />
           <Property Name="ct_cliente" Type="Int16" Nullable="false" />
-          <Property Name="ct_servicio" Type="Int16" Nullable="false" />
-          <Property Name="ct_cantservicios" Type="Int16" Nullable="false" />
           <Property Name="ct_fecha" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="ct_hora" Type="Time" Nullable="false" Precision="7" />
           <Property Name="ct_estatus" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="cita_detalle" Relationship="Self.fk_svd_ct" FromRole="citas" ToRole="cita_detalle" />
           <NavigationProperty Name="clientes" Relationship="Self.fkcliente" FromRole="citas" ToRole="clientes" />
           <NavigationProperty Name="empleados" Relationship="Self.fkempleado" FromRole="citas" ToRole="empleados" />
           <NavigationProperty Name="notaventa" Relationship="Self.fknotacita" FromRole="citas" ToRole="notaventa" />
-          <NavigationProperty Name="servicios" Relationship="Self.fkservicio" FromRole="citas" ToRole="servicios" />
         </EntityType>
         <EntityType Name="clientes">
           <Key>
@@ -313,7 +337,7 @@ advertencia 6002: La tabla o vista 'estetica_lupita.dbo.notaventa_detalle' no ti
           <Property Name="idempleado" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="emp_nombrecompleto" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="emp_telefono" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="emp_sueldo" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="emp_sueldo" Type="Decimal" Precision="7" Scale="2" Nullable="false" />
           <Property Name="emp_puesto" Type="Int16" Nullable="false" />
           <Property Name="emp_estatus" Type="Int16" Nullable="false" />
           <NavigationProperty Name="citas" Relationship="Self.fkempleado" FromRole="empleados" ToRole="citas" />
@@ -325,7 +349,7 @@ advertencia 6002: La tabla o vista 'estetica_lupita.dbo.notaventa_detalle' no ti
             <PropertyRef Name="idnotaventa" />
           </Key>
           <Property Name="idnotaventa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nv_total" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="nv_total" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
           <Property Name="nv_cita" Type="Int32" Nullable="false" />
           <Property Name="nv_cliente" Type="Int16" Nullable="false" />
           <Property Name="nv_empleado" Type="Int16" Nullable="false" />
@@ -334,6 +358,19 @@ advertencia 6002: La tabla o vista 'estetica_lupita.dbo.notaventa_detalle' no ti
           <NavigationProperty Name="clientes" Relationship="Self.fknotacliente" FromRole="notaventa" ToRole="clientes" />
           <NavigationProperty Name="empleados" Relationship="Self.fknotaemp" FromRole="notaventa" ToRole="empleados" />
           <NavigationProperty Name="notaventa_detalle" Relationship="Self.fknotacnota" FromRole="notaventa" ToRole="notaventa_detalle" />
+        </EntityType>
+        <EntityType Name="notaventa_detalle">
+          <Key>
+            <PropertyRef Name="idnotaventadetalle" />
+          </Key>
+          <Property Name="idnotaventa" Type="Int32" Nullable="false" />
+          <Property Name="nvd_servicio" Type="Int16" Nullable="false" />
+          <Property Name="nvd_precio" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="nvd_cantidad" Type="Int16" Nullable="false" />
+          <Property Name="nvd_estatus" Type="Int16" Nullable="false" />
+          <Property Name="idnotaventadetalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="notaventa" Relationship="Self.fknotacnota" FromRole="notaventa_detalle" ToRole="notaventa" />
+          <NavigationProperty Name="servicios" Relationship="Self.fknotavservicio" FromRole="notaventa_detalle" ToRole="servicios" />
         </EntityType>
         <EntityType Name="puestos">
           <Key>
@@ -350,9 +387,9 @@ advertencia 6002: La tabla o vista 'estetica_lupita.dbo.notaventa_detalle' no ti
           </Key>
           <Property Name="idservicio" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="sv_descripcion" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="sv_precio" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="sv_precio" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
           <Property Name="sv_estatus" Type="Int16" Nullable="false" />
-          <NavigationProperty Name="citas" Relationship="Self.fkservicio" FromRole="servicios" ToRole="citas" />
+          <NavigationProperty Name="cita_detalle" Relationship="Self.fk_svd_sv" FromRole="servicios" ToRole="cita_detalle" />
           <NavigationProperty Name="notaventa_detalle" Relationship="Self.fknotavservicio" FromRole="servicios" ToRole="notaventa_detalle" />
         </EntityType>
         <EntityType Name="usuarios">
@@ -363,22 +400,30 @@ advertencia 6002: La tabla o vista 'estetica_lupita.dbo.notaventa_detalle' no ti
           <Property Name="usuario_name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="usuario_pass" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
-        <EntityType Name="notaventa_detalle">
-          <Key>
-            <PropertyRef Name="idnotaventa" />
-            <PropertyRef Name="nvd_servicio" />
-            <PropertyRef Name="nvd_precio" />
-            <PropertyRef Name="nvd_cantidad" />
-            <PropertyRef Name="nvd_estatus" />
-          </Key>
-          <Property Name="idnotaventa" Type="Int32" Nullable="false" />
-          <Property Name="nvd_servicio" Type="Int16" Nullable="false" />
-          <Property Name="nvd_precio" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
-          <Property Name="nvd_cantidad" Type="Int16" Nullable="false" />
-          <Property Name="nvd_estatus" Type="Int16" Nullable="false" />
-          <NavigationProperty Name="notaventa" Relationship="Self.fknotacnota" FromRole="notaventa_detalle" ToRole="notaventa" />
-          <NavigationProperty Name="servicios" Relationship="Self.fknotavservicio" FromRole="notaventa_detalle" ToRole="servicios" />
-        </EntityType>
+        <Association Name="fk_svd_ct">
+          <End Role="citas" Type="Self.citas" Multiplicity="1" />
+          <End Role="cita_detalle" Type="Self.cita_detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="citas">
+              <PropertyRef Name="idcita" />
+            </Principal>
+            <Dependent Role="cita_detalle">
+              <PropertyRef Name="sv_cita" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_svd_sv">
+          <End Role="servicios" Type="Self.servicios" Multiplicity="1" />
+          <End Role="cita_detalle" Type="Self.cita_detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="servicios">
+              <PropertyRef Name="idservicio" />
+            </Principal>
+            <Dependent Role="cita_detalle">
+              <PropertyRef Name="sv_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fkcliente">
           <End Role="clientes" Type="Self.clientes" Multiplicity="1" />
           <End Role="citas" Type="Self.citas" Multiplicity="*" />
@@ -412,18 +457,6 @@ advertencia 6002: La tabla o vista 'estetica_lupita.dbo.notaventa_detalle' no ti
             </Principal>
             <Dependent Role="notaventa">
               <PropertyRef Name="nv_cita" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fkservicio">
-          <End Role="servicios" Type="Self.servicios" Multiplicity="1" />
-          <End Role="citas" Type="Self.citas" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="servicios">
-              <PropertyRef Name="idservicio" />
-            </Principal>
-            <Dependent Role="citas">
-              <PropertyRef Name="ct_servicio" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -489,14 +522,23 @@ advertencia 6002: La tabla o vista 'estetica_lupita.dbo.notaventa_detalle' no ti
         </Association>
         <EntityContainer Name="estetica_lupitaEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="auditorias" EntityType="Self.auditorias" />
+          <EntitySet Name="cita_detalle" EntityType="Self.cita_detalle" />
           <EntitySet Name="citas" EntityType="Self.citas" />
           <EntitySet Name="clientes" EntityType="Self.clientes" />
           <EntitySet Name="empleados" EntityType="Self.empleados" />
           <EntitySet Name="notaventa" EntityType="Self.notaventa" />
+          <EntitySet Name="notaventa_detalle" EntityType="Self.notaventa_detalle" />
           <EntitySet Name="puestos" EntityType="Self.puestos" />
           <EntitySet Name="servicios" EntityType="Self.servicios" />
           <EntitySet Name="usuarios" EntityType="Self.usuarios" />
-          <EntitySet Name="notaventa_detalle" EntityType="Self.notaventa_detalle" />
+          <AssociationSet Name="fk_svd_ct" Association="Self.fk_svd_ct">
+            <End Role="citas" EntitySet="citas" />
+            <End Role="cita_detalle" EntitySet="cita_detalle" />
+          </AssociationSet>
+          <AssociationSet Name="fk_svd_sv" Association="Self.fk_svd_sv">
+            <End Role="servicios" EntitySet="servicios" />
+            <End Role="cita_detalle" EntitySet="cita_detalle" />
+          </AssociationSet>
           <AssociationSet Name="fkcliente" Association="Self.fkcliente">
             <End Role="clientes" EntitySet="clientes" />
             <End Role="citas" EntitySet="citas" />
@@ -508,10 +550,6 @@ advertencia 6002: La tabla o vista 'estetica_lupita.dbo.notaventa_detalle' no ti
           <AssociationSet Name="fknotacita" Association="Self.fknotacita">
             <End Role="citas" EntitySet="citas" />
             <End Role="notaventa" EntitySet="notaventa" />
-          </AssociationSet>
-          <AssociationSet Name="fkservicio" Association="Self.fkservicio">
-            <End Role="servicios" EntitySet="servicios" />
-            <End Role="citas" EntitySet="citas" />
           </AssociationSet>
           <AssociationSet Name="fknotacliente" Association="Self.fknotacliente">
             <End Role="clientes" EntitySet="clientes" />
@@ -539,9 +577,9 @@ advertencia 6002: La tabla o vista 'estetica_lupita.dbo.notaventa_detalle' no ti
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="estetica_lupita_dbStoreContainer" CdmEntityContainer="estetica_lupitaEntities">
+        <EntityContainerMapping StorageEntityContainer="estetica_lupitaModelStoreContainer" CdmEntityContainer="estetica_lupitaEntities">
           <EntitySetMapping Name="auditorias">
-            <EntityTypeMapping TypeName="estetica_lupita_db.auditorias">
+            <EntityTypeMapping TypeName="estetica_lupitaModel.auditorias">
               <MappingFragment StoreEntitySet="auditorias">
                 <ScalarProperty Name="idauditoria" ColumnName="idauditoria" />
                 <ScalarProperty Name="descripcion" ColumnName="descripcion" />
@@ -550,14 +588,24 @@ advertencia 6002: La tabla o vista 'estetica_lupita.dbo.notaventa_detalle' no ti
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="cita_detalle">
+            <EntityTypeMapping TypeName="estetica_lupitaModel.cita_detalle">
+              <MappingFragment StoreEntitySet="cita_detalle">
+                <ScalarProperty Name="idserviciodetalle" ColumnName="idserviciodetalle" />
+                <ScalarProperty Name="sv_id" ColumnName="sv_id" />
+                <ScalarProperty Name="sv_cant" ColumnName="sv_cant" />
+                <ScalarProperty Name="sv_precio" ColumnName="sv_precio" />
+                <ScalarProperty Name="sv_importe" ColumnName="sv_importe" />
+                <ScalarProperty Name="sv_cita" ColumnName="sv_cita" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="citas">
-            <EntityTypeMapping TypeName="estetica_lupita_db.citas">
+            <EntityTypeMapping TypeName="estetica_lupitaModel.citas">
               <MappingFragment StoreEntitySet="citas">
                 <ScalarProperty Name="idcita" ColumnName="idcita" />
                 <ScalarProperty Name="ct_empleado" ColumnName="ct_empleado" />
                 <ScalarProperty Name="ct_cliente" ColumnName="ct_cliente" />
-                <ScalarProperty Name="ct_servicio" ColumnName="ct_servicio" />
-                <ScalarProperty Name="ct_cantservicios" ColumnName="ct_cantservicios" />
                 <ScalarProperty Name="ct_fecha" ColumnName="ct_fecha" />
                 <ScalarProperty Name="ct_hora" ColumnName="ct_hora" />
                 <ScalarProperty Name="ct_estatus" ColumnName="ct_estatus" />
@@ -565,7 +613,7 @@ advertencia 6002: La tabla o vista 'estetica_lupita.dbo.notaventa_detalle' no ti
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="clientes">
-            <EntityTypeMapping TypeName="estetica_lupita_db.clientes">
+            <EntityTypeMapping TypeName="estetica_lupitaModel.clientes">
               <MappingFragment StoreEntitySet="clientes">
                 <ScalarProperty Name="idcliente" ColumnName="idcliente" />
                 <ScalarProperty Name="cl_nombrecompleto" ColumnName="cl_nombrecompleto" />
@@ -576,7 +624,7 @@ advertencia 6002: La tabla o vista 'estetica_lupita.dbo.notaventa_detalle' no ti
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="empleados">
-            <EntityTypeMapping TypeName="estetica_lupita_db.empleados">
+            <EntityTypeMapping TypeName="estetica_lupitaModel.empleados">
               <MappingFragment StoreEntitySet="empleados">
                 <ScalarProperty Name="idempleado" ColumnName="idempleado" />
                 <ScalarProperty Name="emp_nombrecompleto" ColumnName="emp_nombrecompleto" />
@@ -588,7 +636,7 @@ advertencia 6002: La tabla o vista 'estetica_lupita.dbo.notaventa_detalle' no ti
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="notaventa">
-            <EntityTypeMapping TypeName="estetica_lupita_db.notaventa">
+            <EntityTypeMapping TypeName="estetica_lupitaModel.notaventa">
               <MappingFragment StoreEntitySet="notaventa">
                 <ScalarProperty Name="idnotaventa" ColumnName="idnotaventa" />
                 <ScalarProperty Name="nv_total" ColumnName="nv_total" />
@@ -599,8 +647,20 @@ advertencia 6002: La tabla o vista 'estetica_lupita.dbo.notaventa_detalle' no ti
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="notaventa_detalle">
+            <EntityTypeMapping TypeName="estetica_lupitaModel.notaventa_detalle">
+              <MappingFragment StoreEntitySet="notaventa_detalle">
+                <ScalarProperty Name="idnotaventa" ColumnName="idnotaventa" />
+                <ScalarProperty Name="nvd_servicio" ColumnName="nvd_servicio" />
+                <ScalarProperty Name="nvd_precio" ColumnName="nvd_precio" />
+                <ScalarProperty Name="nvd_cantidad" ColumnName="nvd_cantidad" />
+                <ScalarProperty Name="nvd_estatus" ColumnName="nvd_estatus" />
+                <ScalarProperty Name="idnotaventadetalle" ColumnName="idnotaventadetalle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="puestos">
-            <EntityTypeMapping TypeName="estetica_lupita_db.puestos">
+            <EntityTypeMapping TypeName="estetica_lupitaModel.puestos">
               <MappingFragment StoreEntitySet="puestos">
                 <ScalarProperty Name="idpuesto" ColumnName="idpuesto" />
                 <ScalarProperty Name="pst_descripcion" ColumnName="pst_descripcion" />
@@ -609,7 +669,7 @@ advertencia 6002: La tabla o vista 'estetica_lupita.dbo.notaventa_detalle' no ti
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="servicios">
-            <EntityTypeMapping TypeName="estetica_lupita_db.servicios">
+            <EntityTypeMapping TypeName="estetica_lupitaModel.servicios">
               <MappingFragment StoreEntitySet="servicios">
                 <ScalarProperty Name="idservicio" ColumnName="idservicio" />
                 <ScalarProperty Name="sv_descripcion" ColumnName="sv_descripcion" />
@@ -619,22 +679,11 @@ advertencia 6002: La tabla o vista 'estetica_lupita.dbo.notaventa_detalle' no ti
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="usuarios">
-            <EntityTypeMapping TypeName="estetica_lupita_db.usuarios">
+            <EntityTypeMapping TypeName="estetica_lupitaModel.usuarios">
               <MappingFragment StoreEntitySet="usuarios">
                 <ScalarProperty Name="idusuario" ColumnName="idusuario" />
                 <ScalarProperty Name="usuario_name" ColumnName="usuario_name" />
                 <ScalarProperty Name="usuario_pass" ColumnName="usuario_pass" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="notaventa_detalle">
-            <EntityTypeMapping TypeName="estetica_lupita_db.notaventa_detalle">
-              <MappingFragment StoreEntitySet="notaventa_detalle">
-                <ScalarProperty Name="idnotaventa" ColumnName="idnotaventa" />
-                <ScalarProperty Name="nvd_servicio" ColumnName="nvd_servicio" />
-                <ScalarProperty Name="nvd_precio" ColumnName="nvd_precio" />
-                <ScalarProperty Name="nvd_cantidad" ColumnName="nvd_cantidad" />
-                <ScalarProperty Name="nvd_estatus" ColumnName="nvd_estatus" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

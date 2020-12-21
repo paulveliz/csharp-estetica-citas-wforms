@@ -30,6 +30,13 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCitas));
             this.groupAgebdarCita = new System.Windows.Forms.GroupBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.txttotal = new System.Windows.Forms.TextBox();
+            this.btnservicioadd = new System.Windows.Forms.Button();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.txtimporte = new System.Windows.Forms.TextBox();
             this.btncliente = new System.Windows.Forms.Button();
             this.btnempleado = new System.Windows.Forms.Button();
             this.btnagendar = new System.Windows.Forms.Button();
@@ -68,19 +75,29 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.btnporfechas = new System.Windows.Forms.Button();
-            this.label12 = new System.Windows.Forms.Label();
-            this.txtimporte = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.dgvserv = new System.Windows.Forms.DataGridView();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Serviicio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Precio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Importe = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupAgebdarCita.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtcantservicios)).BeginInit();
             this.groupOrdenarcita.SuspendLayout();
             this.groupCitasRegistradas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvbase)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvserv)).BeginInit();
             this.SuspendLayout();
             // 
             // groupAgebdarCita
             // 
+            this.groupAgebdarCita.Controls.Add(this.label14);
+            this.groupAgebdarCita.Controls.Add(this.label15);
+            this.groupAgebdarCita.Controls.Add(this.txttotal);
+            this.groupAgebdarCita.Controls.Add(this.btnservicioadd);
             this.groupAgebdarCita.Controls.Add(this.label13);
             this.groupAgebdarCita.Controls.Add(this.label12);
             this.groupAgebdarCita.Controls.Add(this.txtimporte);
@@ -105,10 +122,80 @@
             this.groupAgebdarCita.Margin = new System.Windows.Forms.Padding(4);
             this.groupAgebdarCita.Name = "groupAgebdarCita";
             this.groupAgebdarCita.Padding = new System.Windows.Forms.Padding(4);
-            this.groupAgebdarCita.Size = new System.Drawing.Size(340, 379);
+            this.groupAgebdarCita.Size = new System.Drawing.Size(340, 401);
             this.groupAgebdarCita.TabIndex = 0;
             this.groupAgebdarCita.TabStop = false;
             this.groupAgebdarCita.Text = "Agendar nueva cita";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(193, 353);
+            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(16, 17);
+            this.label14.TabIndex = 39;
+            this.label14.Text = "$";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(214, 332);
+            this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(54, 17);
+            this.label15.TabIndex = 37;
+            this.label15.Text = "TOTAL";
+            // 
+            // txttotal
+            // 
+            this.txttotal.Location = new System.Drawing.Point(217, 353);
+            this.txttotal.Margin = new System.Windows.Forms.Padding(4);
+            this.txttotal.Name = "txttotal";
+            this.txttotal.ReadOnly = true;
+            this.txttotal.Size = new System.Drawing.Size(75, 22);
+            this.txttotal.TabIndex = 38;
+            // 
+            // btnservicioadd
+            // 
+            this.btnservicioadd.Enabled = false;
+            this.btnservicioadd.Location = new System.Drawing.Point(127, 208);
+            this.btnservicioadd.Margin = new System.Windows.Forms.Padding(4);
+            this.btnservicioadd.Name = "btnservicioadd";
+            this.btnservicioadd.Size = new System.Drawing.Size(202, 27);
+            this.btnservicioadd.TabIndex = 36;
+            this.btnservicioadd.Text = "+ Agregar servicio";
+            this.btnservicioadd.UseVisualStyleBackColor = true;
+            this.btnservicioadd.Click += new System.EventHandler(this.btnservicioadd_Click);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(9, 213);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(16, 17);
+            this.label13.TabIndex = 35;
+            this.label13.Text = "$";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(26, 190);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(55, 17);
+            this.label12.TabIndex = 33;
+            this.label12.Text = "Importe";
+            // 
+            // txtimporte
+            // 
+            this.txtimporte.Location = new System.Drawing.Point(29, 211);
+            this.txtimporte.Margin = new System.Windows.Forms.Padding(4);
+            this.txtimporte.Name = "txtimporte";
+            this.txtimporte.ReadOnly = true;
+            this.txtimporte.Size = new System.Drawing.Size(75, 22);
+            this.txtimporte.TabIndex = 34;
             // 
             // btncliente
             // 
@@ -135,7 +222,7 @@
             // btnagendar
             // 
             this.btnagendar.Enabled = false;
-            this.btnagendar.Location = new System.Drawing.Point(94, 340);
+            this.btnagendar.Location = new System.Drawing.Point(20, 348);
             this.btnagendar.Margin = new System.Windows.Forms.Padding(4);
             this.btnagendar.Name = "btnagendar";
             this.btnagendar.Size = new System.Drawing.Size(142, 27);
@@ -147,7 +234,7 @@
             // txtminuto
             // 
             this.txtminuto.Enabled = false;
-            this.txtminuto.Location = new System.Drawing.Point(187, 304);
+            this.txtminuto.Location = new System.Drawing.Point(145, 304);
             this.txtminuto.Margin = new System.Windows.Forms.Padding(4);
             this.txtminuto.Name = "txtminuto";
             this.txtminuto.Size = new System.Drawing.Size(49, 22);
@@ -158,7 +245,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(158, 308);
+            this.label7.Location = new System.Drawing.Point(124, 306);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(13, 17);
@@ -168,7 +255,7 @@
             // txthora
             // 
             this.txthora.Enabled = false;
-            this.txthora.Location = new System.Drawing.Point(97, 304);
+            this.txthora.Location = new System.Drawing.Point(67, 304);
             this.txthora.Margin = new System.Windows.Forms.Padding(4);
             this.txthora.Name = "txthora";
             this.txthora.Size = new System.Drawing.Size(49, 22);
@@ -178,7 +265,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(44, 304);
+            this.label6.Location = new System.Drawing.Point(12, 306);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(39, 17);
@@ -188,7 +275,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(16, 254);
+            this.label5.Location = new System.Drawing.Point(9, 253);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(47, 17);
@@ -296,7 +383,7 @@
             this.groupOrdenarcita.Controls.Add(this.rdbpendientes);
             this.groupOrdenarcita.Controls.Add(this.rdbsatisfactorias);
             this.groupOrdenarcita.Controls.Add(this.rdbprogreso);
-            this.groupOrdenarcita.Location = new System.Drawing.Point(4, 391);
+            this.groupOrdenarcita.Location = new System.Drawing.Point(4, 453);
             this.groupOrdenarcita.Margin = new System.Windows.Forms.Padding(4);
             this.groupOrdenarcita.Name = "groupOrdenarcita";
             this.groupOrdenarcita.Padding = new System.Windows.Forms.Padding(4);
@@ -365,14 +452,14 @@
             // groupCitasRegistradas
             // 
             this.groupCitasRegistradas.Controls.Add(this.dgvbase);
-            this.groupCitasRegistradas.Location = new System.Drawing.Point(352, 172);
+            this.groupCitasRegistradas.Location = new System.Drawing.Point(360, 391);
             this.groupCitasRegistradas.Margin = new System.Windows.Forms.Padding(4);
             this.groupCitasRegistradas.Name = "groupCitasRegistradas";
             this.groupCitasRegistradas.Padding = new System.Windows.Forms.Padding(4);
-            this.groupCitasRegistradas.Size = new System.Drawing.Size(994, 380);
+            this.groupCitasRegistradas.Size = new System.Drawing.Size(986, 280);
             this.groupCitasRegistradas.TabIndex = 2;
             this.groupCitasRegistradas.TabStop = false;
-            this.groupCitasRegistradas.Text = "Citas Registradas (doble click para cancelar)";
+            this.groupCitasRegistradas.Text = "Citas Registradas (doble click para dar de baja)";
             // 
             // dgvbase
             // 
@@ -388,7 +475,7 @@
             this.dgvbase.RowHeadersVisible = false;
             this.dgvbase.RowHeadersWidth = 62;
             this.dgvbase.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvbase.Size = new System.Drawing.Size(986, 357);
+            this.dgvbase.Size = new System.Drawing.Size(978, 257);
             this.dgvbase.TabIndex = 1;
             this.dgvbase.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvbase_CellDoubleClick);
             // 
@@ -530,40 +617,83 @@
             this.btnporfechas.UseVisualStyleBackColor = true;
             this.btnporfechas.Click += new System.EventHandler(this.btnporfechas_Click);
             // 
-            // label12
+            // groupBox2
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(26, 190);
-            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(55, 17);
-            this.label12.TabIndex = 33;
-            this.label12.Text = "Importe";
+            this.groupBox2.Controls.Add(this.dgvserv);
+            this.groupBox2.Location = new System.Drawing.Point(360, 125);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox2.Size = new System.Drawing.Size(975, 258);
+            this.groupBox2.TabIndex = 3;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Cita actual(Click para eliminar servicio)";
             // 
-            // txtimporte
+            // dgvserv
             // 
-            this.txtimporte.Location = new System.Drawing.Point(29, 211);
-            this.txtimporte.Margin = new System.Windows.Forms.Padding(4);
-            this.txtimporte.Name = "txtimporte";
-            this.txtimporte.ReadOnly = true;
-            this.txtimporte.Size = new System.Drawing.Size(75, 22);
-            this.txtimporte.TabIndex = 34;
+            this.dgvserv.AllowUserToAddRows = false;
+            this.dgvserv.AllowUserToDeleteRows = false;
+            this.dgvserv.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvserv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvserv.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Id,
+            this.Serviicio,
+            this.Cantidad,
+            this.Precio,
+            this.Importe});
+            this.dgvserv.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvserv.Location = new System.Drawing.Point(4, 19);
+            this.dgvserv.Margin = new System.Windows.Forms.Padding(4);
+            this.dgvserv.Name = "dgvserv";
+            this.dgvserv.ReadOnly = true;
+            this.dgvserv.RowHeadersVisible = false;
+            this.dgvserv.RowHeadersWidth = 62;
+            this.dgvserv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvserv.Size = new System.Drawing.Size(967, 235);
+            this.dgvserv.TabIndex = 2;
             // 
-            // label13
+            // Id
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(9, 213);
-            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(16, 17);
-            this.label13.TabIndex = 35;
-            this.label13.Text = "$";
+            this.Id.HeaderText = "Id";
+            this.Id.MinimumWidth = 6;
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            this.Id.Visible = false;
+            // 
+            // Serviicio
+            // 
+            this.Serviicio.HeaderText = "Serviicio";
+            this.Serviicio.MinimumWidth = 6;
+            this.Serviicio.Name = "Serviicio";
+            this.Serviicio.ReadOnly = true;
+            // 
+            // Cantidad
+            // 
+            this.Cantidad.HeaderText = "Cantidad";
+            this.Cantidad.MinimumWidth = 6;
+            this.Cantidad.Name = "Cantidad";
+            this.Cantidad.ReadOnly = true;
+            // 
+            // Precio
+            // 
+            this.Precio.HeaderText = "Precio";
+            this.Precio.MinimumWidth = 6;
+            this.Precio.Name = "Precio";
+            this.Precio.ReadOnly = true;
+            // 
+            // Importe
+            // 
+            this.Importe.HeaderText = "Importe";
+            this.Importe.MinimumWidth = 6;
+            this.Importe.Name = "Importe";
+            this.Importe.ReadOnly = true;
             // 
             // frmCitas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1376, 555);
+            this.ClientSize = new System.Drawing.Size(1376, 673);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnporfechas);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
@@ -591,6 +721,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvbase)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvserv)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -640,5 +772,17 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox txtimporte;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Button btnservicioadd;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox txttotal;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Servicio;
+        private System.Windows.Forms.DataGridView dgvserv;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Serviicio;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Cantidad;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Precio;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Importe;
     }
 }

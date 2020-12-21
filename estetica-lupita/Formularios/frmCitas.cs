@@ -19,7 +19,6 @@ namespace estetica_lupita.Formularios
         servicioController svCtrl = new servicioController();
         public empleadoModel Empleado { get; set; }
         public clientes Cliente { get; set; }
-        public servicios Servicio { get; set; }
         public frmCitas()
         {
             InitializeComponent();
@@ -56,6 +55,7 @@ namespace estetica_lupita.Formularios
             txthora.Enabled = t;
             txtminuto.Enabled = t;
             btnagendar.Enabled = t;
+            btnservicioadd.Enabled = t;
         }
 
         private void frmCitas_Load(object sender, EventArgs e)
@@ -120,22 +120,36 @@ namespace estetica_lupita.Formularios
                 MessageBox.Show("No puede hacer 0 servicios.", "Datos invalidos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
+            if(dgvserv.Rows.Count < 1)
+            {
+                MessageBox.Show("No puede hacer 0 servicios.", "Datos invalidos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
                 
             var r = MessageBox.Show("Agendar cita?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (r == DialogResult.No) return;
 
             this.Cursor = Cursors.WaitCursor;
+            List<cita_detalle> citaDetalles = new List<cita_detalle>();
+            foreach (DataGridViewRow row in dgvserv.Rows)
+            {
+                citaDetalles.Add(new cita_detalle
+                {
+                    sv_id = (short)Convert.ToInt32( row.Cells[0].Value.ToString() ),
+                    sv_cant = Convert.ToInt32(row.Cells[2].Value.ToString()),
+                    sv_precio = Convert.ToDecimal(row.Cells[3].Value.ToString()),
+                    sv_importe = Convert.ToDecimal(row.Cells[4].Value.ToString()),
+                });
+            }
             var cita = await ctCtrl.crearCita(new citas
             {
                 ct_estatus = 1,
-                ct_cantservicios = (short)Convert.ToInt32( txtcantservicios.Value ),
                 ct_cliente = this.Cliente.idcliente,
                 ct_empleado = this.Empleado.Id,
                 ct_fecha = this.txtfecha.Value,
                 ct_hora =  Convert.ToDateTime( $"{txthora.Text}:{txtminuto.Text}:00" ).TimeOfDay,
-                ct_servicio = (short)cboxservicio.SelectedValue,
-            });
+            },
+            citaDetalles);
             this.Cursor = Cursors.Default;
             if(cita != null)
             {
@@ -210,9 +224,9 @@ namespace estetica_lupita.Formularios
         
         private async void calcularImporte()
         {
-            Servicio = (servicios)cboxservicio.SelectedItem;
+            var oServicio = (servicios)cboxservicio.SelectedItem;
             var svCtrl = new servicioController();
-            var servicio = await svCtrl.obtenerPorId(Servicio.idservicio);
+            var servicio = await svCtrl.obtenerPorId(oServicio.idservicio);
             this.txtimporte.Text = (servicio.sv_precio * Convert.ToInt32( txtcantservicios.Value)).ToString();
         }
         private void ajustarDgv()
@@ -221,10 +235,8 @@ namespace estetica_lupita.Formularios
             dgvbase.Columns[0].HeaderText = "Folio";
             dgvbase.Columns[1].HeaderText = "Empleado";
             dgvbase.Columns[2].HeaderText = "Cliente";
-            dgvbase.Columns[3].HeaderText = "Servicio";
-            dgvbase.Columns[4].HeaderText = "Cantidad";
-            dgvbase.Columns[5].HeaderText = "Fecha";
-            dgvbase.Columns[6].HeaderText = "Hora";
+            dgvbase.Columns[3].HeaderText = "Fecha";
+            dgvbase.Columns[4].HeaderText = "Hora";
         }
 
         private async void txtbusqueda_KeyPress(object sender, KeyPressEventArgs e)
@@ -304,12 +316,22 @@ namespace estetica_lupita.Formularios
 
         private void txtcantservicios_ValueChanged(object sender, EventArgs e)
         {
+            if( Convert.ToInt32( txtcantservicios.Value ) < 1)
+            {
+                this.txtcantservicios.Value = 1;
+            }
            calcularImporte();
         }
 
         private void cboxservicio_SelectedIndexChanged(object sender, EventArgs e)
         {
             calcularImporte();
+        }
+
+        private void btnservicioadd_Click(object sender, EventArgs e)
+        {
+            var servicio = (servicios)cboxservicio.SelectedItem;
+            this.dgvserv.Rows.Add(servicio.idservicio.ToString(), servicio.sv_descripcion, txtcantservicios.Value.ToString(), servicio.sv_precio.ToString(), txtimporte.Text);
         }
     }
 }

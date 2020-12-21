@@ -26,13 +26,14 @@ namespace Modelos.EF
         }
     
         public virtual DbSet<auditorias> auditorias { get; set; }
+        public virtual DbSet<cita_detalle> cita_detalle { get; set; }
         public virtual DbSet<citas> citas { get; set; }
         public virtual DbSet<clientes> clientes { get; set; }
         public virtual DbSet<empleados> empleados { get; set; }
         public virtual DbSet<notaventa> notaventa { get; set; }
+        public virtual DbSet<notaventa_detalle> notaventa_detalle { get; set; }
         public virtual DbSet<puestos> puestos { get; set; }
         public virtual DbSet<servicios> servicios { get; set; }
         public virtual DbSet<usuarios> usuarios { get; set; }
-        public virtual DbSet<notaventa_detalle> notaventa_detalle { get; set; }
     }
 }

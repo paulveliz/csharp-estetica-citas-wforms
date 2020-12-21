@@ -20,18 +20,19 @@ namespace estetica_lupita.Formularios
         public citaModel Cita { get; set; }
         public citas CitaBase { get; set; }
         public servicios Servicio { get; set; }
+        public List<citaDetalleModel> CitaDetalle { get; set; }
         public frmPuntoventa()
         {
             InitializeComponent();
         }
         private async void calcularImporte()
         {
-            var citaOriginal = await ctCtrl.obtenerCitaPorIdOriginal(this.Cita.Id);
-            this.CitaBase = citaOriginal;
+            this.CitaBase = await ctCtrl.obtenerCitaPorIdOriginal(this.Cita.Id);
             var svCtrl = new servicioController();
-            var servicio = await svCtrl.obtenerPorId( citaOriginal.ct_servicio );
+            var servicio = await svCtrl.obtenerPorId(CitaDetalle[0].ServicioId );
             this.Servicio = servicio;
-            this.txtimporte.Text = (servicio.sv_precio * Convert.ToInt32(Cita.CantidadServicios)).ToString();
+            decimal total = CitaDetalle.Sum(d => d.Importe);
+            this.txtimporte.Text = total.ToString();
         }
         private async void btncapturar_Click(object sender, EventArgs e)
         {
@@ -40,24 +41,15 @@ namespace estetica_lupita.Formularios
 
         private async Task capturarCita()
         {
-            List<citaModel> lst = new List<citaModel>();
             int citaId = Convert.ToInt32(txtcita.Text);
-            var cita = await ctCtrl.obtenerCitaPorId(citaId);
-            if (cita != null)
+            var cita = await ctCtrl.getFullCita(citaId);
+            if (cita.Cita != null)
             {
-                this.Cita = cita;
-                lst.Add(cita);
-                this.dgvbase.DataSource = lst;
-                dgvbase.Columns[0].Visible = true;
-                dgvbase.Columns[0].Width = 40;
-                dgvbase.Columns[0].HeaderText = "Folio";
+                this.Cita = cita.Cita;
+                CitaDetalle = cita.CitaDetalle;
+                this.dgvbase.DataSource = CitaDetalle;
+                dgvbase.Columns[0].Visible = false;
                 dgvbase.Columns[1].Visible = false;
-                dgvbase.Columns[2].HeaderText = "Cliente";
-                dgvbase.Columns[3].HeaderText = "Servicio";
-                dgvbase.Columns[4].HeaderText = "Cantidad";
-                dgvbase.Columns[4].Width = 50;
-                dgvbase.Columns[5].Visible = false;
-                dgvbase.Columns[6].Visible = false;
                 calcularImporte();
             }
             else
@@ -73,13 +65,18 @@ namespace estetica_lupita.Formularios
 
         private async void frmPuntoventa_Load(object sender, EventArgs e)
         {
+            await obtenerMaxFolio();
+        }
+
+        private async Task obtenerMaxFolio()
+        {
             var ventas = await vtCtrl.obtenerTodas();
-            if(ventas.Count == 0)
+            if (ventas.Count == 0)
             {
                 txtfolio.Text = "1";
                 return;
             }
-            txtfolio.Text = (ventas.Max(v => v.NotaVenta.Id) + 1).ToString();
+            txtfolio.Text = (ventas.Max(v => v.NotaVenta.Id)  +1 ).ToString();
         }
 
         private async void frmPuntoventa_KeyDown(object sender, KeyEventArgs e)
@@ -118,6 +115,24 @@ namespace estetica_lupita.Formularios
 
         private async Task crearVenta()
         {
+            var rc = MessageBox.Show($"Desea completar la venta?",
+                                "Confirmar",
+                                MessageBoxButtons.YesNo,
+                                MessageBoxIcon.Question
+                                );
+            if (rc == DialogResult.No) return;
+
+            List<notaventa_detalle> nvd = new List<notaventa_detalle>();
+            nvd = CitaDetalle.Select(citadetalle => 
+                new notaventa_detalle
+                {
+                    nvd_cantidad = (short)citadetalle.Cantidad,
+                    nvd_precio = citadetalle.Precio,
+                    nvd_servicio = (short)citadetalle.ServicioId,
+                    nvd_estatus = 1
+                }
+            ).ToList();
+
             var venta = await vtCtrl.crearNueva(new notaventa
             {
                 nv_cita = this.Cita.Id,
@@ -126,13 +141,7 @@ namespace estetica_lupita.Formularios
                 nv_estatus = 1,
                 nv_total = Convert.ToDecimal(txtimporte.Text)
             },
-            new notaventa_detalle
-            {
-                nvd_cantidad = this.CitaBase.ct_cantservicios,
-                nvd_precio = this.Servicio.sv_precio,
-                nvd_servicio = this.Servicio.idservicio,
-                nvd_estatus = 1
-            });
+            nvd);
 
             if (venta != null)
             {
@@ -141,13 +150,16 @@ namespace estetica_lupita.Formularios
                                 MessageBoxButtons.YesNo,
                                 MessageBoxIcon.Question
                                 );
-                if (r == DialogResult.No) return;
+                if (r == DialogResult.No) {
+                    reiniciarFormulario();
+                    return;
+                }
                 reiniciarFormulario();
                 // TODO: IMPRIMIR TICKET.
             }
         }
 
-        private void reiniciarFormulario()
+        private async void reiniciarFormulario()
         {
             this.Refresh();
             this.Controls.Clear();
@@ -155,6 +167,7 @@ namespace estetica_lupita.Formularios
             this.Cita = new citaModel();
             CitaBase = new citas();
             Servicio = new servicios();
+            await obtenerMaxFolio();
             txtcita.Focus();
         }
     }

@@ -12,16 +12,16 @@ namespace Modelos.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class notaventa_detalle
+    public partial class cita_detalle
     {
-        public int idnotaventa { get; set; }
-        public short nvd_servicio { get; set; }
-        public decimal nvd_precio { get; set; }
-        public short nvd_cantidad { get; set; }
-        public short nvd_estatus { get; set; }
-        public int idnotaventadetalle { get; set; }
+        public int idserviciodetalle { get; set; }
+        public short sv_id { get; set; }
+        public int sv_cant { get; set; }
+        public decimal sv_precio { get; set; }
+        public decimal sv_importe { get; set; }
+        public int sv_cita { get; set; }
     
-        public virtual notaventa notaventa { get; set; }
+        public virtual citas citas { get; set; }
         public virtual servicios servicios { get; set; }
     }
 }

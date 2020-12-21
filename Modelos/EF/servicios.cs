@@ -17,7 +17,7 @@ namespace Modelos.EF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public servicios()
         {
-            this.citas = new HashSet<citas>();
+            this.cita_detalle = new HashSet<cita_detalle>();
             this.notaventa_detalle = new HashSet<notaventa_detalle>();
         }
     
@@ -27,7 +27,7 @@ namespace Modelos.EF
         public short sv_estatus { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<citas> citas { get; set; }
+        public virtual ICollection<cita_detalle> cita_detalle { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<notaventa_detalle> notaventa_detalle { get; set; }
     }
