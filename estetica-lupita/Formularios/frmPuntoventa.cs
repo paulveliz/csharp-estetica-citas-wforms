@@ -115,6 +115,11 @@ namespace estetica_lupita.Formularios
 
         private async Task crearVenta()
         {
+            if (dgvbase.Rows.Count < 1)
+            {
+                MessageBox.Show("No puede realizar la venta con 0 servicios a capturar.", "Datos invalidos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             var rc = MessageBox.Show($"Desea completar la venta?",
                                 "Confirmar",
                                 MessageBoxButtons.YesNo,

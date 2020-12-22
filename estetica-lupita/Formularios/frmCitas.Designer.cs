@@ -153,8 +153,9 @@
             this.txttotal.Margin = new System.Windows.Forms.Padding(4);
             this.txttotal.Name = "txttotal";
             this.txttotal.ReadOnly = true;
-            this.txttotal.Size = new System.Drawing.Size(75, 22);
+            this.txttotal.Size = new System.Drawing.Size(84, 22);
             this.txttotal.TabIndex = 38;
+            this.txttotal.Text = "0";
             // 
             // btnservicioadd
             // 
@@ -527,6 +528,7 @@
             // rbnservicio
             // 
             this.rbnservicio.AutoSize = true;
+            this.rbnservicio.Enabled = false;
             this.rbnservicio.Location = new System.Drawing.Point(161, 61);
             this.rbnservicio.Margin = new System.Windows.Forms.Padding(4);
             this.rbnservicio.Name = "rbnservicio";

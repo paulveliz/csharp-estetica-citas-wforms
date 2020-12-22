@@ -237,6 +237,7 @@ namespace estetica_lupita.Formularios
             dgvbase.Columns[2].HeaderText = "Cliente";
             dgvbase.Columns[3].HeaderText = "Fecha";
             dgvbase.Columns[4].HeaderText = "Hora";
+            dgvbase.Columns[5].Visible = false;
         }
 
         private async void txtbusqueda_KeyPress(object sender, KeyPressEventArgs e)
@@ -332,6 +333,9 @@ namespace estetica_lupita.Formularios
         {
             var servicio = (servicios)cboxservicio.SelectedItem;
             this.dgvserv.Rows.Add(servicio.idservicio.ToString(), servicio.sv_descripcion, txtcantservicios.Value.ToString(), servicio.sv_precio.ToString(), txtimporte.Text);
+            decimal total = Convert.ToDecimal(txttotal.Text);
+            total += Convert.ToDecimal(txtimporte.Text);
+            txttotal.Text = total.ToString();
         }
     }
 }

@@ -69,8 +69,7 @@ namespace estetica_lupita
 
         private void respaldoDeSistemaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Formularios.frmRespaldo Cs = new Formularios.frmRespaldo();
-            Cs.Show();
+   
         }
 
         private void informeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -82,6 +81,24 @@ namespace estetica_lupita
         private void puntoDeVentaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Formularios.frmPuntoventa Cs = new Formularios.frmPuntoventa();
+            Cs.Show();
+        }
+
+        private void respaldarSistemaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Formularios.frmRespaldo Cs = new Formularios.frmRespaldo();
+            Cs.Show();
+        }
+
+        private void otroToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Formularios.frmCitas Cs = new Formularios.frmCitas();
+            Cs.Show();
+        }
+
+        private void reporteDeVentasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Formularios.sub.frmgenerarreporte Cs = new Formularios.sub.frmgenerarreporte();
             Cs.Show();
         }
     }
