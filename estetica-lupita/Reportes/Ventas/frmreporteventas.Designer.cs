@@ -1,4 +1,6 @@
-﻿namespace estetica_lupita.Reportes
+﻿using estetica_lupita.Reportes.Ventas;
+
+namespace estetica_lupita.Reportes
 {
     partial class frmreporteventas
     {
@@ -29,9 +31,9 @@
         private void InitializeComponent()
         {
             this.rptventas = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
-            this.rptventas1 = new estetica_lupita.Reportes.rptventas();
-            this.rptventas2 = new estetica_lupita.Reportes.rptventas();
-            this.rptventas3 = new estetica_lupita.Reportes.rptventas();
+            this.rptventas1 = new estetica_lupita.Reportes.Ventas.rptventas();
+            this.rptventas2 = new estetica_lupita.Reportes.Ventas.rptventas();
+            this.rptventas3 = new estetica_lupita.Reportes.Ventas.rptventas();
             this.SuspendLayout();
             // 
             // rptventas

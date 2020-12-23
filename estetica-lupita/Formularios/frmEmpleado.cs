@@ -17,6 +17,7 @@ namespace estetica_lupita.Formularios
     {
         empleadoController empCtrl = new empleadoController();
         puestoController pstCtrl = new puestoController();
+        public bool existe { get; set; }
         public frmEmpleado()
         {
             InitializeComponent();
@@ -57,10 +58,15 @@ namespace estetica_lupita.Formularios
                 var verifyEmp = await empCtrl.verificarNombre(txtnombrecompleto.Text.Trim());
                 if (verifyEmp != null)
                 {
-                    MessageBox.Show("Ya existe un empleado con el nombre introducido.", "Datos invalidos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); ;
+                    var r = MessageBox.Show("Ya existe un empleado con el nombre introducido, desea actualizar la informacion de este empleado?", "Empleado existente", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (r == DialogResult.No) return;
+                    existe = true;
+                    txtnombrecompleto.Enabled = false;
+                    setControls(true);
+                    txttelefono.Focus();
                     return;
                 }
-
+                existe = false;
                 txtnombrecompleto.Enabled = false;
                 setControls(true);
                 txttelefono.Focus();
@@ -137,6 +143,39 @@ namespace estetica_lupita.Formularios
                 MessageBox.Show("El telefono debe tener almenos 10 digitos de longitud.", "Datos invalidos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
+
+            if(existe == true)
+            {
+                var re = MessageBox.Show($"¿Editar al empleado {txtnombrecompleto.Text.Trim()}", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (re == DialogResult.No) return;
+
+                var actualizado = await empCtrl.actualizar(new empleados
+                {
+                    emp_estatus = 1,
+                    emp_nombrecompleto = txtnombrecompleto.Text.Trim(),
+                    emp_puesto = (short)cboxpuestos.SelectedValue,
+                    emp_telefono = txttelefono.Text.Trim(),
+                    emp_sueldo = Convert.ToDecimal(txtsueldo.Text.Trim())
+                });
+                if (actualizado != null)
+                {
+                    MessageBox.Show("El empleado fue actualizado con exito!", "Operacion exitosa!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    cargarEmpleados();
+                    cargarPuestos();
+                    reloadForm();
+                    txtnombrecompleto.Focus();
+                }
+                else
+                {
+                    MessageBox.Show("Ocurrio un error en el sistema, pongase en contacto con el administrador.", "Operacion sin exito", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                    cargarEmpleados();
+                    cargarPuestos();
+                    reloadForm();
+                    txtnombrecompleto.Focus();
+                }
+                return;
+            }
+
             var r = MessageBox.Show($"¿Agregar nuevo empelado {txtnombrecompleto.Text.Trim()}", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if(r == DialogResult.Yes)
             {

@@ -1,6 +1,5 @@
 ﻿using Controladores;
 using Modelos;
-using Modelos.EF;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,12 +10,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using estetica_lupita.Reportes;
+using estetica_lupita.Reportes.Citas;
 
 namespace estetica_lupita.Formularios.sub
 {
-    public partial class frmgenerarreporte : Form
+    public partial class frmgenerarreportecitas : Form
     {
-        public frmgenerarreporte()
+        public frmgenerarreportecitas()
         {
             InitializeComponent();
         }
@@ -26,33 +26,31 @@ namespace estetica_lupita.Formularios.sub
             if (rbtntodas.Checked)
             {
                 this.button1.Enabled = false;
-                var vtCtrl = new ventaController();
-                var ventas = await vtCtrl.obtenerPorFechas(this.dateTimePicker1.Value, this.dateTimePicker2.Value);
-                var notaventas = ventas.Select(venta => venta.NotaVenta).ToList();
+                var ctCtrl = new citaController();
+                var citas = await ctCtrl.obtenerCitasPorFecha(this.dateTimePicker1.Value, this.dateTimePicker2.Value);
+                generarReporte(citas, "reporte de solo citas");
                 this.button1.Enabled = true;
-                generarReporte(notaventas, "reporte de solo ventas");
             }
 
             if (rbtncliente.Checked)
             {
-                using(var pickCl = new utilidades.frm_cliente_picker())
+                using (var pickCl = new utilidades.frm_cliente_picker())
                 {
                     var result = pickCl.ShowDialog();
-                    if(result == DialogResult.Yes)
+                    if (result == DialogResult.Yes)
                     {
                         var cliente = pickCl.Cliente;
                         var r = MessageBox.Show(
-                            $"Generar reporte en base las ventas hechas al cliente {cliente.cl_nombrecompleto} ?",
+                            $"Generar reporte en base las citas hechas al cliente {cliente.cl_nombrecompleto} ?",
                             "Confirmar",
                             MessageBoxButtons.YesNo,
                             MessageBoxIcon.Question);
                         if (r == DialogResult.No) return;
                         this.button1.Enabled = false;
-                        var vtCtrl = new ventaController();
-                        var ventas = await vtCtrl.obtenerPorCliente(this.dateTimePicker1.Value, this.dateTimePicker2.Value, cliente.idcliente);
-                        var notaventas = ventas.Select(venta => venta.NotaVenta).ToList();
+                        var ctCtrl = new citaController();
+                        var citas = await ctCtrl.obtenerCitasPorCliente(this.dateTimePicker1.Value, this.dateTimePicker2.Value, cliente.idcliente); // cita por clientes
+                        generarReporte(citas, "reporte de solo cliente");
                         this.button1.Enabled = true;
-                        generarReporte(notaventas, "reporte por cliente");
                     }
                     else
                     {
@@ -63,24 +61,23 @@ namespace estetica_lupita.Formularios.sub
 
             if (rbtnempelado.Checked)
             {
-                using(var pickCl = new utilidades.frm_empleado_picker())
+                using (var pickCl = new utilidades.frm_empleado_picker())
                 {
                     var result = pickCl.ShowDialog();
-                    if(result == DialogResult.Yes)
+                    if (result == DialogResult.Yes)
                     {
-                        var empelado = pickCl.Empleado;
+                        var emp = pickCl.Empleado;
                         var r = MessageBox.Show(
-                            $"Generar reporte en base las ventas hechas por el empleado {empelado.NombreCompleto} ?",
+                            $"Generar reporte en base las citas hechas al cliente {emp.NombreCompleto} ?",
                             "Confirmar",
                             MessageBoxButtons.YesNo,
                             MessageBoxIcon.Question);
                         if (r == DialogResult.No) return;
                         this.button1.Enabled = false;
-                        var vtCtrl = new ventaController();
-                        var ventas = await vtCtrl.obtenerPorEmpleado(this.dateTimePicker1.Value, this.dateTimePicker2.Value, empelado.Id);
-                        var notaventas = ventas.Select(venta => venta.NotaVenta).ToList();
+                        var ctCtrl = new citaController();
+                        var citas = await ctCtrl.obtenerCitasPorEmpleado(this.dateTimePicker1.Value, this.dateTimePicker2.Value, emp.Id); // cita por empleados
+                        generarReporte(citas, "reporte de solo empleado");
                         this.button1.Enabled = true;
-                        generarReporte(notaventas, "reporte por empleado");
                     }
                     else
                     {
@@ -88,15 +85,16 @@ namespace estetica_lupita.Formularios.sub
                     }
                 }
             }
-
         }
 
-        private void generarReporte(List<notaventaModel> notaventas, String tipoReporte)
+        private void generarReporte(List<citaModel> citas, String tipoReporte)
         {
-            using (var rptventas = new frmreporteventas(notaventas, this.dateTimePicker1.Value, this.dateTimePicker2.Value, tipoReporte))
+            // abrir frmreportecitas y inyectar datos.
+            using (var rptcitas = new frmrptcitas(citas, this.dateTimePicker1.Value, this.dateTimePicker2.Value, tipoReporte))
             {
-                rptventas.ShowDialog();
+                rptcitas.ShowDialog();
             }
         }
+
     }
 }

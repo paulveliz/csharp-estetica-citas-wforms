@@ -76,7 +76,7 @@ namespace estetica_lupita.Formularios
                 txtfolio.Text = "1";
                 return;
             }
-            txtfolio.Text = (ventas.Max(v => v.NotaVenta.Id)  +1 ).ToString();
+            txtfolio.Text = (ventas.Max(v => v.NotaVenta.Id)  +2 ).ToString();
         }
 
         private async void frmPuntoventa_KeyDown(object sender, KeyEventArgs e)

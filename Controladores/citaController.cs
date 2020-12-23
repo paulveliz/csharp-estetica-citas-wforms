@@ -316,5 +316,57 @@ namespace Controladores
                 return query.OrderByDescending(o => o.Id).ToList();
             }
         }
+
+
+        /**
+         * 
+         *  REPORTS
+         * 
+         * **/
+
+        public async Task<List<citaModel>> obtenerCitasPorCliente(DateTime from, DateTime to, int clienteId)
+        {
+            using (var db = new estetica_lupitaEntities())
+            {
+                var query = await (from cita in db.citas.Where(c =>
+                                        c.ct_fecha >= @from &&
+                                        c.ct_fecha <= @to
+                                    )
+                                   join empleado in db.empleados on cita.ct_empleado equals empleado.idempleado
+                                   join cliente in db.clientes on cita.ct_cliente equals cliente.idcliente
+                                   where cita.ct_estatus != 0 && cliente.idcliente == clienteId
+                                   select new citaModel
+                                   {
+                                       Id = cita.idcita,
+                                       Fecha = cita.ct_fecha,
+                                       Hora = cita.ct_hora,
+                                       NombreCliente = cliente.cl_nombrecompleto,
+                                       NombreEmpleado = empleado.emp_nombrecompleto,
+                                   }).ToListAsync();
+                return query.OrderByDescending(o => o.Id).ToList();
+            }
+        }
+        public async Task<List<citaModel>> obtenerCitasPorEmpleado(DateTime from, DateTime to, int empleadoId)
+        {
+            using (var db = new estetica_lupitaEntities())
+            {
+                var query = await (from cita in db.citas.Where(c =>
+                                        c.ct_fecha >= @from &&
+                                        c.ct_fecha <= @to
+                                    )
+                                   join empleado in db.empleados on cita.ct_empleado equals empleado.idempleado
+                                   join cliente in db.clientes on cita.ct_cliente equals cliente.idcliente
+                                   where cita.ct_estatus != 0 && empleado.idempleado == empleadoId
+                                   select new citaModel
+                                   {
+                                       Id = cita.idcita,
+                                       Fecha = cita.ct_fecha,
+                                       Hora = cita.ct_hora,
+                                       NombreCliente = cliente.cl_nombrecompleto,
+                                       NombreEmpleado = empleado.emp_nombrecompleto,
+                                   }).ToListAsync();
+                return query.OrderByDescending(o => o.Id).ToList();
+            }
+        }
     }
 }

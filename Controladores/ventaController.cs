@@ -154,5 +154,93 @@ namespace Controladores
             }
         }
 
+        /**
+         *  REPORTS
+         * 
+         * **/
+
+        public async Task<List<FullVenta>> obtenerPorCliente(DateTime fromt, DateTime to, int clienteId)
+        {
+            using (var db = new estetica_lupitaEntities())
+            {
+                var query = await (from notaventa in db.notaventa
+                                   join cita in db.citas on notaventa.nv_cita equals cita.idcita
+                                   join cliente in db.clientes on notaventa.nv_cliente equals cliente.idcliente
+                                   join empleado in db.empleados on notaventa.nv_cliente equals empleado.idempleado
+                                   where cita.ct_fecha >= fromt && cita.ct_fecha <= to && cliente.idcliente == clienteId
+                                   select new notaventaModel
+                                   {
+                                       Id = notaventa.idnotaventa,
+                                       Cita = cita.idcita,
+                                       Cliente = cliente.cl_nombrecompleto,
+                                       Empleado = empleado.emp_nombrecompleto,
+                                       Total = notaventa.nv_total,
+                                       Estatus = notaventa.nv_estatus,
+                                   }).ToListAsync();
+
+                var detalles = await (from nvd in db.notaventa_detalle
+                                      join servicio in db.servicios on nvd.nvd_servicio equals servicio.idservicio
+                                      select new notaventaDetalleModel
+                                      {
+                                          Id = nvd.idnotaventa,
+                                          Servicio = servicio.sv_descripcion,
+                                          Precio = nvd.nvd_precio,
+                                          Cantidad = nvd.nvd_cantidad
+                                      }).ToListAsync();
+
+                // Retornar lista de ventas con su lista de detalles
+                var fv = query.Select(v => {
+                    return new FullVenta(
+                        nota: v,
+                        detalle: detalles.Where(d => d.Id == v.Id).ToList());
+                }).ToList().OrderByDescending(o =>
+                    o.NotaVenta.Id
+                ).ToList();
+
+                return fv;
+            }
+        }
+        public async Task<List<FullVenta>> obtenerPorEmpleado(DateTime fromt, DateTime to, int empleadoId)
+        {
+            using (var db = new estetica_lupitaEntities())
+            {
+                var query = await (from notaventa in db.notaventa
+                                   join cita in db.citas on notaventa.nv_cita equals cita.idcita
+                                   join cliente in db.clientes on notaventa.nv_cliente equals cliente.idcliente
+                                   join empleado in db.empleados on notaventa.nv_cliente equals empleado.idempleado
+                                   where cita.ct_fecha >= fromt && cita.ct_fecha <= to && empleado.idempleado == empleadoId
+                                   select new notaventaModel
+                                   {
+                                       Id = notaventa.idnotaventa,
+                                       Cita = cita.idcita,
+                                       Cliente = cliente.cl_nombrecompleto,
+                                       Empleado = empleado.emp_nombrecompleto,
+                                       Total = notaventa.nv_total,
+                                       Estatus = notaventa.nv_estatus,
+                                   }).ToListAsync();
+
+                var detalles = await (from nvd in db.notaventa_detalle
+                                      join servicio in db.servicios on nvd.nvd_servicio equals servicio.idservicio
+                                      select new notaventaDetalleModel
+                                      {
+                                          Id = nvd.idnotaventa,
+                                          Servicio = servicio.sv_descripcion,
+                                          Precio = nvd.nvd_precio,
+                                          Cantidad = nvd.nvd_cantidad
+                                      }).ToListAsync();
+
+                // Retornar lista de ventas con su lista de detalles
+                var fv = query.Select(v => {
+                    return new FullVenta(
+                        nota: v,
+                        detalle: detalles.Where(d => d.Id == v.Id).ToList());
+                }).ToList().OrderByDescending(o =>
+                    o.NotaVenta.Id
+                ).ToList();
+
+                return fv;
+            }
+        }
+
     }
 }

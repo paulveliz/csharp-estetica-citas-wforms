@@ -15,6 +15,7 @@ namespace estetica_lupita.Formularios
     public partial class frmServicio : Form
     {
         servicioController svCtrl = new servicioController();
+        public bool existe { get; set; }
         public frmServicio()
         {
             InitializeComponent();
@@ -49,10 +50,16 @@ namespace estetica_lupita.Formularios
                 var verifyServicio = await svCtrl.verificarNombre(txtdescripcion.Text.Trim());
                 if(verifyServicio != null)
                 {
-                    MessageBox.Show("El servicio que intenta agregar ya existe en el sistema.", "Servicio existente", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    var rr = MessageBox.Show("El servicio que intenta agregar ya existe en el sistema, desea modificar su precio?", "Servicio existente", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (rr == DialogResult.No) return;
+                    existe = true;
+                    this.txtdescripcion.Enabled = false;
+                    txtprecio.Enabled = true;
+                    btnagregar.Enabled = true;
+                    txtprecio.Focus();
                     return;
                 }
-
+                existe = false;
                 this.txtdescripcion.Enabled = false;
                 txtprecio.Enabled = true;
                 btnagregar.Enabled = true;
@@ -89,6 +96,36 @@ namespace estetica_lupita.Formularios
             if (txtprecio.Text.Length < 3)
             {
                 MessageBox.Show("El precio debe tener almenos 3 digitos de longitud.", "Datos invalidos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            if(existe == true)
+            {
+                var res = MessageBox.Show(
+                    $"Desea modificar el servicio {txtdescripcion.Text.Trim()}?",
+                    "Confirmar",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+                if (res == DialogResult.No) return;
+                this.Cursor = Cursors.WaitCursor;
+                var actualizado = await svCtrl.actualizar(new servicios
+                {
+                    sv_descripcion = txtdescripcion.Text.Trim(),
+                    sv_precio = Convert.ToDecimal(txtprecio.Text.Trim()),
+                    sv_estatus = 1
+                });
+                if (actualizado != null)
+                {
+                    MessageBox.Show($"El servicio {txtdescripcion.Text.Trim()} fue actualizado con exito. ", "Operacion exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    reloadForm();
+                }
+                else
+                {
+                    MessageBox.Show("Ocurrio un error actualizando el servicio comuniquese con el administrador del sistema.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                    reloadForm();
+                }
+                this.Cursor = Cursors.Default;
                 return;
             }
 

@@ -15,6 +15,7 @@ namespace estetica_lupita.Formularios
     public partial class frmClientes : Form
     {
         clienteController clienteCtrl = new clienteController();
+        public bool existe { get; set; }
         public char Genero { get; set; }
         public frmClientes()
         {
@@ -71,10 +72,15 @@ namespace estetica_lupita.Formularios
                 var user = await clienteCtrl.verificarNombre(txtnombre.Text.Trim());
                 if( user != null)
                 {
-                    MessageBox.Show("Ya existe un cliente con este nombre en el sistema.", "Datos invalidos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    var r = MessageBox.Show($"Ya existe un cliente con ese nombre en el sistema ¿Desea actualizar los datos del cliente {txtnombre.Text.Trim()}?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (r == DialogResult.No) return;
+                    existe = true;
+                    txtnombre.Enabled = false;
+                    txttelefono.Enabled = true;
+                    txttelefono.Focus();
                     return;
                 }
-
+                existe = false;
                 txtnombre.Enabled = false;
                 txttelefono.Enabled = true;
                 txttelefono.Focus();
@@ -117,6 +123,28 @@ namespace estetica_lupita.Formularios
             {
                 MessageBox.Show("Telefono demasiado corto, debe tener al menos 10 digitos.", "Datos invalidos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
+            }
+            if(existe == true)
+            {
+                var rr = MessageBox.Show($"¿Desea actualizar los datos del cliente {txtnombre.Text.Trim()}?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (rr == DialogResult.No) return;
+                var clienteActualizado = await clienteCtrl.editar(new clientes
+                {
+                    cl_estatus = 1,
+                    cl_nombrecompleto = txtnombre.Text.Trim(),
+                    cl_telefono = txttelefono.Text.Trim(),
+                    cl_sexo = Genero.ToString()
+                });
+                if (clienteActualizado != null)
+                {
+                    MessageBox.Show("Cliente actualizado con exito.", "Operacion exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show("Ocurrio un error agregando el cliente en el sistema, contacte con el administrador del sistema.", "Operacion sin exito", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                    return;
+                }
             }
             var r = MessageBox.Show($"¿Desea agregar el nuevo cliente {txtnombre.Text.Trim()}?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (r == DialogResult.No) return;

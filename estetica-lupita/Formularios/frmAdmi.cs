@@ -14,6 +14,7 @@ namespace estetica_lupita.Formularios
     public partial class frmAdmi : Form
     {
         userController userCtrl = new userController();
+        public bool existe { get; set; }
         public frmAdmi()
         {
             InitializeComponent();
@@ -46,22 +47,29 @@ namespace estetica_lupita.Formularios
                 var user = await userCtrl.verificarExistencia(txtusuario.Text.Trim());
                 if (user != null)
                 {
-                    MessageBox.Show("El nombre de usuario introducida ya se encuentra ocupado.",
-                                    "Nombre no disponible",
-                                    MessageBoxButtons.OK,
+                  var r = MessageBox.Show("El nombre de usuario introducida ya se encuentra ocupado. desea editarlo?",
+                                    "Usuario existente",
+                                    MessageBoxButtons.YesNo,
                                     MessageBoxIcon.Warning);
-                    txtusuario.Focus();
-                    return;
+                    if(r == DialogResult.No) return;
+                    existe = true;
+                    doStuffTouserControls();
                 }
                 else
                 {
-                    txtpass1.Enabled = true;
-                    txtpass2.Enabled = true;
-                    txtusuario.Enabled = false;
-                    btnagregar.Enabled = true;
-                    txtpass1.Focus();
+                    existe = false;
+                    doStuffTouserControls();
                 }
             }
+        }
+
+        private void doStuffTouserControls()
+        {
+            txtpass1.Enabled = true;
+            txtpass2.Enabled = true;
+            txtusuario.Enabled = false;
+            btnagregar.Enabled = true;
+            txtpass1.Focus();
         }
 
         private  void frmAdmi_KeyDown(object sender, KeyEventArgs e)
@@ -79,7 +87,6 @@ namespace estetica_lupita.Formularios
                     this.InitializeComponent();
                     cargarUsuarios();
                     txtusuario.Focus();
-                    
                 }
             }
         }
@@ -101,6 +108,37 @@ namespace estetica_lupita.Formularios
                                  MessageBoxButtons.OK,
                                  MessageBoxIcon.Warning);
                 return;
+            }
+            if(existe == true)
+            {
+                var rr = MessageBox.Show($"¿Actualizar el administrador {txtusuario.Text}  ?",
+                 "Confirmar",
+                 MessageBoxButtons.YesNo,
+                 MessageBoxIcon.Question);
+                    if (rr == DialogResult.Yes)
+                    {
+                        this.Cursor = Cursors.WaitCursor;
+                        // Actualizar usuario & limpiar controles.
+                       var result = await userCtrl.editarUsuario(new Modelos.EF.usuarios
+                        {
+                            usuario_name = txtusuario.Text.Trim().ToUpper(),
+                            usuario_pass = clases.encriptacion.encriptar(txtpass1.Text.Trim())
+                        });
+                    if (result != null)
+                    {
+                        MessageBox.Show("Usuario actualizado con exito.", "Operacion exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        reloadForm();
+                        this.Cursor = Cursors.Default;
+                        return;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ocurrio un error en el sistema, contacte con el administrador del sistema.", "Operacion sin exito", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                        reloadForm();
+                        this.Cursor = Cursors.Default;
+                        return;
+                    }
+                }
             }
             var r = MessageBox.Show($"¿Agregar el administrador {txtusuario.Text} al sistema ?",
                          "Confirmar",

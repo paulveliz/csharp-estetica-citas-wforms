@@ -92,13 +92,24 @@ namespace estetica_lupita
 
         private void otroToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Formularios.frmCitas Cs = new Formularios.frmCitas();
-            Cs.Show();
+
         }
 
         private void reporteDeVentasToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Formularios.sub.frmgenerarreporte Cs = new Formularios.sub.frmgenerarreporte();
+            Cs.Show();
+        }
+
+        private void gestionarCitasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Formularios.frmCitas Cs = new Formularios.frmCitas();
+            Cs.Show();
+        }
+
+        private void reporteDeCitasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Formularios.sub.frmgenerarreportecitas Cs = new Formularios.sub.frmgenerarreportecitas();
             Cs.Show();
         }
     }
