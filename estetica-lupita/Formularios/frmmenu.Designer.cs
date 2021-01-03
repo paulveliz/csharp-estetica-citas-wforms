@@ -42,13 +42,15 @@
             this.puntoDeVentaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reporteDeVentasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.otroToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.informeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.respaldarSistemaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.otrosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label1 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.gestionarCitasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reporteDeCitasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.informeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.respaldarSistemaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reportesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reporteGeneralDeAuditoriasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reportePorUsuarioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label1 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -63,8 +65,7 @@
             this.clientesToolStripMenuItem,
             this.ventasToolStripMenuItem,
             this.otroToolStripMenuItem,
-            this.informeToolStripMenuItem,
-            this.otrosToolStripMenuItem});
+            this.informeToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
@@ -86,14 +87,14 @@
             // administradoresToolStripMenuItem
             // 
             this.administradoresToolStripMenuItem.Name = "administradoresToolStripMenuItem";
-            this.administradoresToolStripMenuItem.Size = new System.Drawing.Size(221, 26);
+            this.administradoresToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.administradoresToolStripMenuItem.Text = "Administradores";
             this.administradoresToolStripMenuItem.Click += new System.EventHandler(this.administradoresToolStripMenuItem_Click);
             // 
             // citasToolStripMenuItem
             // 
             this.citasToolStripMenuItem.Name = "citasToolStripMenuItem";
-            this.citasToolStripMenuItem.Size = new System.Drawing.Size(221, 26);
+            this.citasToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.citasToolStripMenuItem.Text = "Citas";
             this.citasToolStripMenuItem.Click += new System.EventHandler(this.citasToolStripMenuItem_Click);
             // 
@@ -104,7 +105,7 @@
             this.empleadosToolStripMenuItem,
             this.serviciosToolStripMenuItem});
             this.manejoDelSistemaToolStripMenuItem.Name = "manejoDelSistemaToolStripMenuItem";
-            this.manejoDelSistemaToolStripMenuItem.Size = new System.Drawing.Size(221, 26);
+            this.manejoDelSistemaToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.manejoDelSistemaToolStripMenuItem.Text = "Manejo del sistema";
             // 
             // puestosToolStripMenuItem
@@ -171,28 +172,60 @@
             this.otroToolStripMenuItem.Text = "Citas";
             this.otroToolStripMenuItem.Click += new System.EventHandler(this.otroToolStripMenuItem_Click);
             // 
+            // gestionarCitasToolStripMenuItem
+            // 
+            this.gestionarCitasToolStripMenuItem.Name = "gestionarCitasToolStripMenuItem";
+            this.gestionarCitasToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
+            this.gestionarCitasToolStripMenuItem.Text = "Gestionar citas";
+            this.gestionarCitasToolStripMenuItem.Click += new System.EventHandler(this.gestionarCitasToolStripMenuItem_Click);
+            // 
+            // reporteDeCitasToolStripMenuItem
+            // 
+            this.reporteDeCitasToolStripMenuItem.Name = "reporteDeCitasToolStripMenuItem";
+            this.reporteDeCitasToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
+            this.reporteDeCitasToolStripMenuItem.Text = "Reporte de citas";
+            this.reporteDeCitasToolStripMenuItem.Click += new System.EventHandler(this.reporteDeCitasToolStripMenuItem_Click);
+            // 
             // informeToolStripMenuItem
             // 
             this.informeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.respaldarSistemaToolStripMenuItem});
+            this.respaldarSistemaToolStripMenuItem,
+            this.reportesToolStripMenuItem});
             this.informeToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("informeToolStripMenuItem.Image")));
             this.informeToolStripMenuItem.Name = "informeToolStripMenuItem";
-            this.informeToolStripMenuItem.Size = new System.Drawing.Size(99, 51);
-            this.informeToolStripMenuItem.Text = "Informe";
+            this.informeToolStripMenuItem.Size = new System.Drawing.Size(115, 51);
+            this.informeToolStripMenuItem.Text = "Auditorias";
             this.informeToolStripMenuItem.Click += new System.EventHandler(this.informeToolStripMenuItem_Click);
             // 
             // respaldarSistemaToolStripMenuItem
             // 
             this.respaldarSistemaToolStripMenuItem.Name = "respaldarSistemaToolStripMenuItem";
-            this.respaldarSistemaToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
-            this.respaldarSistemaToolStripMenuItem.Text = "Respaldar sistema";
+            this.respaldarSistemaToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.respaldarSistemaToolStripMenuItem.Text = "Depurar auditorias";
             this.respaldarSistemaToolStripMenuItem.Click += new System.EventHandler(this.respaldarSistemaToolStripMenuItem_Click);
             // 
-            // otrosToolStripMenuItem
+            // reportesToolStripMenuItem
             // 
-            this.otrosToolStripMenuItem.Name = "otrosToolStripMenuItem";
-            this.otrosToolStripMenuItem.Size = new System.Drawing.Size(59, 51);
-            this.otrosToolStripMenuItem.Text = "Otros";
+            this.reportesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.reporteGeneralDeAuditoriasToolStripMenuItem,
+            this.reportePorUsuarioToolStripMenuItem});
+            this.reportesToolStripMenuItem.Name = "reportesToolStripMenuItem";
+            this.reportesToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.reportesToolStripMenuItem.Text = "Reportes";
+            // 
+            // reporteGeneralDeAuditoriasToolStripMenuItem
+            // 
+            this.reporteGeneralDeAuditoriasToolStripMenuItem.Name = "reporteGeneralDeAuditoriasToolStripMenuItem";
+            this.reporteGeneralDeAuditoriasToolStripMenuItem.Size = new System.Drawing.Size(290, 26);
+            this.reporteGeneralDeAuditoriasToolStripMenuItem.Text = "Reporte general de auditorias";
+            this.reporteGeneralDeAuditoriasToolStripMenuItem.Click += new System.EventHandler(this.reporteGeneralDeAuditoriasToolStripMenuItem_Click);
+            // 
+            // reportePorUsuarioToolStripMenuItem
+            // 
+            this.reportePorUsuarioToolStripMenuItem.Name = "reportePorUsuarioToolStripMenuItem";
+            this.reportePorUsuarioToolStripMenuItem.Size = new System.Drawing.Size(290, 26);
+            this.reportePorUsuarioToolStripMenuItem.Text = "Reporte por usuario";
+            this.reportePorUsuarioToolStripMenuItem.Click += new System.EventHandler(this.reportePorUsuarioToolStripMenuItem_Click);
             // 
             // label1
             // 
@@ -214,20 +247,6 @@
             this.pictureBox1.Size = new System.Drawing.Size(434, 418);
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
-            // 
-            // gestionarCitasToolStripMenuItem
-            // 
-            this.gestionarCitasToolStripMenuItem.Name = "gestionarCitasToolStripMenuItem";
-            this.gestionarCitasToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.gestionarCitasToolStripMenuItem.Text = "Gestionar citas";
-            this.gestionarCitasToolStripMenuItem.Click += new System.EventHandler(this.gestionarCitasToolStripMenuItem_Click);
-            // 
-            // reporteDeCitasToolStripMenuItem
-            // 
-            this.reporteDeCitasToolStripMenuItem.Name = "reporteDeCitasToolStripMenuItem";
-            this.reporteDeCitasToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.reporteDeCitasToolStripMenuItem.Text = "Reporte de citas";
-            this.reporteDeCitasToolStripMenuItem.Click += new System.EventHandler(this.reporteDeCitasToolStripMenuItem_Click);
             // 
             // frmmenu
             // 
@@ -272,9 +291,11 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripMenuItem puntoDeVentaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem respaldarSistemaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem otrosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reporteDeVentasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gestionarCitasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reporteDeCitasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reportesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reporteGeneralDeAuditoriasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reportePorUsuarioToolStripMenuItem;
     }
 }

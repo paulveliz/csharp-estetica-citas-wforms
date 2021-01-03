@@ -10,12 +10,19 @@ namespace Controladores
 {
     public class puestoController
     {
-
+        auditController auditCtrl = new auditController();
         public async Task<puestos> obtenerPorId(int puestoId)
         {
             using (var db = new estetica_lupitaEntities())
             {
                 var puesto = await db.puestos.FindAsync(puestoId);
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Obtener puesto por su id {puestoId}",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return puesto;
             }
         }
@@ -35,6 +42,13 @@ namespace Controladores
             using (var db = new estetica_lupitaEntities())
             {
                 var puestos = await db.puestos.Take(100).ToListAsync();
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Obtener todos los puestos de trabajo.",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return puestos
                         .OrderByDescending(o => o.idpuesto)
                         .ToList()
@@ -48,6 +62,13 @@ namespace Controladores
             {
                 var response = db.puestos.Add(puesto);
                 await db.SaveChangesAsync();
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Creo el puesto {puesto.pst_descripcion}",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return response;
             }
         }
@@ -57,6 +78,13 @@ namespace Controladores
             {
                 var response = await db.puestos.FindAsync(puesto.idpuesto);
                 response.pst_descripcion = puesto.pst_descripcion;
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Actualizo el puesto {puesto.pst_descripcion}",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return response;
             }
         }
@@ -67,6 +95,13 @@ namespace Controladores
                 var puesto = await db.puestos.FindAsync(puestoId);
                 puesto.pst_estatus = 0;
                 await db.SaveChangesAsync();
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Dio de baja el puesto {puestoId}",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return puesto;
             }
         }

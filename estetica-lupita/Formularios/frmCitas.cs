@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Controladores;
+using estetica_lupita.Reportes.Tickets;
 using Modelos;
 using Modelos.EF;
 
@@ -153,8 +154,21 @@ namespace estetica_lupita.Formularios
             this.Cursor = Cursors.Default;
             if(cita != null)
             {
-                MessageBox.Show($"Se creo una cita con folio {cita.idcita}, para el cliente {this.Cliente.cl_nombrecompleto} para el dia {this.txtfecha.Value.Day}/{this.txtfecha.Value.Month}/{this.txtfecha.Value.Year} a las {this.txthora.Text}:{this.txtminuto.Text}",
-                    "Operacion exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var msg = MessageBox.Show(
+                    $"Se creo una cita con folio {cita.idcita}, para el cliente " +
+                    $"{this.Cliente.cl_nombrecompleto} para el dia " +
+                    $"{this.txtfecha.Value.Day}/{this.txtfecha.Value.Month}/{this.txtfecha.Value.Year} a " +
+                    $"las {this.txthora.Text}:{this.txtminuto.Text}, Imprimir ticket?",
+                    "Operacion exitosa, Imprimir ticket?", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if(msg == DialogResult.No)
+                {
+                    reloadForm();
+                    return;
+                }
+                // Abrir el formulario con el ticket.
+                var ctd = await ctCtrl.getFullCita(cita.idcita);
+                var frmTicketCita = new frmticketcita(ctd.CitaDetalle, ctd.Cita.Fecha, ctd.Cita.Id);
+                frmTicketCita.ShowDialog();
                 reloadForm();
             }
             else

@@ -16,7 +16,8 @@ namespace Modelos.EF
     {
         public int idauditoria { get; set; }
         public string descripcion { get; set; }
-        public string fecha { get; set; }
-        public string hora { get; set; }
+        public System.DateTime fecha { get; set; }
+        public System.TimeSpan hora { get; set; }
+        public string usuario { get; set; }
     }
 }

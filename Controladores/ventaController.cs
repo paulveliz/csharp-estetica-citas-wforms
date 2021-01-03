@@ -10,8 +10,10 @@ namespace Controladores
 {
     public class ventaController
     {
+        auditController auditCtrl = new auditController();
         public async Task<FullVenta> obtenerPorId(int notaventaId)
         {
+
             using (var db = new estetica_lupitaEntities())
             {
                 var query = await (from notaventa in db.notaventa
@@ -41,6 +43,13 @@ namespace Controladores
                                       }).ToListAsync();
 
                 // Retornar venta con su lista de detalles
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Obtener una venta con id {notaventaId}",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return new FullVenta(nota: query, detalle: detalles);
             }
         }
@@ -74,6 +83,13 @@ namespace Controladores
                                       }).ToListAsync();
 
                 // Retornar lista de ventas con su lista de detalles
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Obtener todas las ventas",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 var fv = query.Select(v => {
                     return new FullVenta(
                         nota: v, 
@@ -114,6 +130,13 @@ namespace Controladores
                                       }).ToListAsync();
 
                 // Retornar lista de ventas con su lista de detalles
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Obtener ventas entre fecha {fromt:d} y {to:d}",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 var fv = query.Select(v => {
                     return new FullVenta(
                         nota: v,
@@ -139,6 +162,13 @@ namespace Controladores
                 var newNota = await obtenerPorId(notaventa.idnotaventa);
                 var ctCtrl = new citaController();
                 await ctCtrl.cambiarEstadoDeCita(notaventa.nv_cita, 3);
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Crear una nueva venta con folio {notaventa.idnotaventa}",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return newNota;
             }
         }
@@ -150,6 +180,13 @@ namespace Controladores
                 var nota = await db.notaventa.FirstOrDefaultAsync(c => c.idnotaventa == notaId);
                 nota.nv_estatus = 0;
                 await db.SaveChangesAsync();
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Dar de baja venta con folio {notaId}",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return nota;
             }
         }

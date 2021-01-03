@@ -10,12 +10,20 @@ namespace Controladores
 {
     public class servicioController
     {
+        auditController auditCtrl = new auditController();
 
         public async Task<servicios> obtenerPorId(int servicioId)
         {
             using (var db = new estetica_lupitaEntities())
             {
                 var servicio = await db.servicios.FirstOrDefaultAsync( c => c.idservicio == servicioId);
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Obtener servicio por su id {servicioId}",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return servicio;
             }
         }
@@ -35,6 +43,13 @@ namespace Controladores
             using (var db = new estetica_lupitaEntities())
             {
                 var servicios = await db.servicios.Take(100).ToListAsync();
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Obtener todos los servicios",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return servicios.OrderByDescending(o => o.idservicio)
                                 .ToList()
                                 .Where(s => s.sv_estatus != 0)
@@ -47,6 +62,13 @@ namespace Controladores
             {
                 var response = db.servicios.Add(servicio);
                 await db.SaveChangesAsync();
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Crear servicio {servicio.sv_descripcion}",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return response;
             }
         }
@@ -58,6 +80,13 @@ namespace Controladores
                 response.sv_descripcion = servicio.sv_descripcion;
                 response.sv_precio = servicio.sv_precio;
                 await db.SaveChangesAsync();
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Actualizar servicio {servicio.sv_descripcion}",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return response;
             }
         }
@@ -68,6 +97,13 @@ namespace Controladores
                 var response = await db.servicios.FindAsync(servicioId);
                 response.sv_estatus = 0;
                 await db.SaveChangesAsync();
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Dar de baja servicio con id {servicioId}",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return response;
             }
         }

@@ -10,6 +10,8 @@ namespace Controladores
 {
     public class clienteController
     {
+        auditController auditCtrl = new auditController();
+
         public async Task<List<clientes>> getclienteByNameMatching(String text)
         {
             using (var db = new estetica_lupitaEntities())
@@ -28,6 +30,13 @@ namespace Controladores
             using (var db = new estetica_lupitaEntities())
             {
                 var cliente = await db.clientes.FirstOrDefaultAsync(c => c.idcliente == clienteId);
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Obtener cliente por su id {clienteId}",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return cliente;
             }
         }
@@ -45,6 +54,13 @@ namespace Controladores
             using (var db = new estetica_lupitaEntities())
             {
                 var clientes = await db.clientes.Take(100).ToListAsync();
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Obtener todos los clientes existentes.",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return clientes
                         .OrderByDescending(o => o.idcliente)
                         .ToList()
@@ -59,6 +75,13 @@ namespace Controladores
             {
                 var response = db.clientes.Add(cliente);
                 await db.SaveChangesAsync();
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Creo al cliente llamado {cliente.cl_nombrecompleto}",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return response;
             }
         }
@@ -72,6 +95,13 @@ namespace Controladores
                 client.cl_nombrecompleto = cliente.cl_nombrecompleto;
                 client.cl_telefono = cliente.cl_telefono;
                 await db.SaveChangesAsync();
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Edito al cliente {cliente.cl_nombrecompleto}",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return client;
             }
         }
@@ -82,6 +112,13 @@ namespace Controladores
                 var client = await db.clientes.FindAsync(clienteId);
                 client.cl_estatus = 0;
                 await db.SaveChangesAsync();
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Dio de baja al cliente con id {clienteId}",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return client;
             }
         }

@@ -51,9 +51,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="auditController.cs" />
     <Compile Include="citaController.cs" />
     <Compile Include="clienteController.cs" />
     <Compile Include="empleadoController.cs" />
+    <Compile Include="global.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="puestoController.cs" />
     <Compile Include="servicioController.cs" />

@@ -11,6 +11,8 @@ namespace Controladores
 {
     public class empleadoController
     {
+        auditController auditCtrl = new auditController();
+
         public async Task<List<empleadoModel>> getempleadoByNameMatching(String text)
         {
             using (var db = new estetica_lupitaEntities())
@@ -49,6 +51,13 @@ namespace Controladores
                                        Telefono = empleado.emp_telefono,
                                        Estatus = empleado.emp_estatus
                                    }).ToListAsync();
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Obtener empleado por su id {empleadoId}",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return query[0];
             }
         }
@@ -78,6 +87,13 @@ namespace Controladores
                                        Telefono = empleado.emp_telefono,
                                        Estatus = empleado.emp_estatus
                                    }).ToListAsync();
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Obtener Todos los empleados",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return empleados
                         .OrderByDescending(o => o.Id)
                         .ToList()
@@ -92,6 +108,13 @@ namespace Controladores
             {
                 var res = db.empleados.Add(empleado);
                 await db.SaveChangesAsync();
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Creo el empleado {empleado.emp_nombrecompleto}",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return res;
             }
         }
@@ -106,6 +129,13 @@ namespace Controladores
                 res.emp_sueldo = empleado.emp_sueldo;
                 res.emp_telefono = empleado.emp_telefono;
                 await db.SaveChangesAsync();
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Actualizo al empleado {empleado.emp_nombrecompleto}",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return res;
             }
         }
@@ -117,6 +147,13 @@ namespace Controladores
                 var empleado = await db.empleados.FindAsync(empleadoId);
                 empleado.emp_estatus = 0;
                 await db.SaveChangesAsync();
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Dio de baja empleado por su id {empleadoId}",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return empleado;
             }
         }

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace estetica_lupita.Reportes.Tickets {
+namespace estetica_lupita.Reportes.Auditorias {
     using System;
     using System.ComponentModel;
     using CrystalDecisions.Shared;
@@ -16,14 +16,14 @@ namespace estetica_lupita.Reportes.Tickets {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class ticketVenta : ReportClass {
+    public class rptauditorias : ReportClass {
         
-        public ticketVenta() {
+        public rptauditorias() {
         }
         
         public override string ResourceName {
             get {
-                return "ticketVenta.rpt";
+                return "rptauditorias.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace estetica_lupita.Reportes.Tickets {
         
         public override string FullResourceName {
             get {
-                return "estetica_lupita.Reportes.Tickets.ticketVenta.rpt";
+                return "estetica_lupita.Reportes.Auditorias.rptauditorias.rpt";
             }
             set {
                 // Do nothing
@@ -90,17 +90,33 @@ namespace estetica_lupita.Reportes.Tickets {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_folioventa {
+        public CrystalDecisions.Shared.IParameterField Parameter_fecha1 {
             get {
                 return this.DataDefinition.ParameterFields[0];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.Shared.IParameterField Parameter_fecha2 {
+            get {
+                return this.DataDefinition.ParameterFields[1];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.Shared.IParameterField Parameter_titulo {
+            get {
+                return this.DataDefinition.ParameterFields[2];
             }
         }
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedticketVenta : Component, ICachedReport {
+    public class Cachedrptauditorias : Component, ICachedReport {
         
-        public CachedticketVenta() {
+        public Cachedrptauditorias() {
         }
         
         [Browsable(false)]
@@ -137,7 +153,7 @@ namespace estetica_lupita.Reportes.Tickets {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            ticketVenta rpt = new ticketVenta();
+            rptauditorias rpt = new rptauditorias();
             rpt.Site = this.Site;
             return rpt;
         }

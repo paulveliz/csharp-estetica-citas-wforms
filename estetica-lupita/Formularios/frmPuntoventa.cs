@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Modelos.EF;
+using estetica_lupita.Reportes.Tickets;
 
 namespace estetica_lupita.Formularios
 {
@@ -45,6 +46,16 @@ namespace estetica_lupita.Formularios
             var cita = await ctCtrl.getFullCita(citaId);
             if (cita.Cita != null)
             {
+                if(cita.Cita.Estatus == 3)
+                {
+                    MessageBox.Show(
+                    "La cita introducida esta catalogada como satisfactoria.",
+                    "Cita no encontrada",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                    );
+                    return;
+                }
                 this.Cita = cita.Cita;
                 CitaDetalle = cita.CitaDetalle;
                 this.dgvbase.DataSource = CitaDetalle;
@@ -159,8 +170,10 @@ namespace estetica_lupita.Formularios
                     reiniciarFormulario();
                     return;
                 }
-                reiniciarFormulario();
                 // TODO: IMPRIMIR TICKET.
+                var frmticketVenta = new frmticketcita(this.CitaDetalle, DateTime.Now, Convert.ToInt32(txtfolio.Text) );
+                frmticketVenta.ShowDialog();
+                reiniciarFormulario();
             }
         }
 

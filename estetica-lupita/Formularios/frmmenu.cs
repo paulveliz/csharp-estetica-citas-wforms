@@ -1,4 +1,6 @@
-﻿using Modelos.EF;
+﻿using Controladores;
+using estetica_lupita.Formularios.sub;
+using Modelos.EF;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,6 +19,7 @@ namespace estetica_lupita
         public frmmenu(usuarios usuario)
         {
             Usuario = usuario;
+            Controladores.global.LoggedUser = usuario;
             InitializeComponent();
         }
 
@@ -27,8 +30,7 @@ namespace estetica_lupita
 
         private void btnauditorias_Click(object sender, EventArgs e)
         {
-            frmaditorias cs = new frmaditorias();
-            cs.Show();
+
         }
 
         private void clientesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -74,8 +76,6 @@ namespace estetica_lupita
 
         private void informeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Formularios.frmreporte Cs = new Formularios.frmreporte();
-            Cs.Show();
         }
 
         private void puntoDeVentaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -84,10 +84,15 @@ namespace estetica_lupita
             Cs.Show();
         }
 
-        private void respaldarSistemaToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void respaldarSistemaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Formularios.frmRespaldo Cs = new Formularios.frmRespaldo();
-            Cs.Show();
+            var r = MessageBox.Show("Desea depurar las auditorias?", "Depurar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (r == DialogResult.No) return;
+            this.Cursor = Cursors.WaitCursor;
+            auditController auCtrl = new auditController();
+            await auCtrl.depurar();
+            this.Cursor = Cursors.Default;
+            MessageBox.Show("Auditorias depuradas con exito.", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void otroToolStripMenuItem_Click(object sender, EventArgs e)
@@ -111,6 +116,18 @@ namespace estetica_lupita
         {
             Formularios.sub.frmgenerarreportecitas Cs = new Formularios.sub.frmgenerarreportecitas();
             Cs.Show();
+        }
+
+        private void reporteGeneralDeAuditoriasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var genR = new frmgenerarreporteauditoria();
+            genR.Show();
+        }
+
+        private void reportePorUsuarioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Formularios.sub.frmgenerarreporteauditoriausuario Cs = new frmgenerarreporteauditoriausuario();
+            Cs.ShowDialog();
         }
     }
 }

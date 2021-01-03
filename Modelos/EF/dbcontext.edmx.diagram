@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7aeb0809985f4c9eb2344588bc3fc152" Name="Diagram1">
+      <Diagram DiagramId="190d9d27458f45a591deeb7ffe572f3f" Name="Diagram1">
         <EntityTypeShape EntityType="estetica_lupitaModel.auditorias" Width="1.5" PointX="3.75" PointY="8.625" IsExpanded="true" />
         <EntityTypeShape EntityType="estetica_lupitaModel.cita_detalle" Width="1.5" PointX="5.25" PointY="4.875" IsExpanded="true" />
         <EntityTypeShape EntityType="estetica_lupitaModel.citas" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />

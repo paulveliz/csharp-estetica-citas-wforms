@@ -11,6 +11,7 @@ namespace Controladores
 {
     public class citaController
     {
+        auditController auditCtrl = new auditController();
         public async Task<FullCita> getFullCita(int citaId)
         {
             using (var db = new estetica_lupitaEntities())
@@ -25,6 +26,7 @@ namespace Controladores
                                        Hora = cita.ct_hora,
                                        NombreCliente = cliente.cl_nombrecompleto,
                                        NombreEmpleado = empleado.emp_nombrecompleto,
+                                       Estatus = cita.ct_estatus
                                    }).FirstOrDefaultAsync();
                 var citaD = await (from citaDetail in db.cita_detalle.Where(c => c.sv_cita == citaId)
                                    join servicio in db.servicios on citaDetail.sv_id equals servicio.idservicio
@@ -38,7 +40,13 @@ namespace Controladores
                                        Importe = citaDetail.sv_importe
                                    }).ToListAsync();
                 var fullCita = new FullCita(citaM, citaD);
-
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Obtener una cita completa con folio {citaId}",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return fullCita;
             }
         }
@@ -138,6 +146,13 @@ namespace Controladores
                                         NombreCliente = cliente.cl_nombrecompleto,
                                         NombreEmpleado = empleado.emp_nombrecompleto,
                                     }).FirstOrDefaultAsync();
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Obtener una cita completa con folio {citaId}",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return query;
             }
         }
@@ -146,6 +161,13 @@ namespace Controladores
             using (var db = new estetica_lupitaEntities())
             {
                 var cita = await db.citas.FirstOrDefaultAsync(c => c.idcita == citaId);
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Obtener una cita completa con folio {citaId}",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return cita;
             }
         }
@@ -166,6 +188,13 @@ namespace Controladores
                                        NombreCliente = cliente.cl_nombrecompleto,
                                        NombreEmpleado = empleado.emp_nombrecompleto,
                                    }).ToListAsync();
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Obtener Todas las citas",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return query.OrderByDescending(o => o.Id)
                             .ToList();
             }
@@ -189,6 +218,13 @@ namespace Controladores
                                        NombreCliente = cliente.cl_nombrecompleto,
                                        NombreEmpleado = empleado.emp_nombrecompleto,
                                    }).ToListAsync();
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Obtener Todas las citas por lapso de fechas entre {from:d} Y {to:d}",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return query.OrderByDescending(o => o.Id).ToList();
             }
         }
@@ -204,6 +240,13 @@ namespace Controladores
                 );
                 db.cita_detalle.AddRange(detalle);
                 await db.SaveChangesAsync();
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Creo una nueva cita con Folio {result.idcita}",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return result;
             }
         }
@@ -219,6 +262,13 @@ namespace Controladores
                 res.ct_hora = cita.ct_hora;
                 res.ct_estatus = cita.ct_estatus;
                 await db.SaveChangesAsync();
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Edito la informacion de una cita con folio {cita.idcita}",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return res;
             }
         }
@@ -238,6 +288,13 @@ namespace Controladores
                 var result = await db.citas.FirstOrDefaultAsync(w => w.idcita == citaId);
                 result.ct_estatus = nuevoEstado;
                 await db.SaveChangesAsync();
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Cambio el estado de la cita con folio {citaId} al estado {nuevoEstado}",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return result;
             }
         }
@@ -257,6 +314,13 @@ namespace Controladores
                                        NombreCliente = cliente.cl_nombrecompleto,
                                        NombreEmpleado = empleado.emp_nombrecompleto,
                                    }).ToListAsync();
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Obtener citas en progreso",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return query.OrderByDescending(o => o.Id).ToList();
             }
         }
@@ -276,6 +340,13 @@ namespace Controladores
                                        NombreCliente = cliente.cl_nombrecompleto,
                                        NombreEmpleado = empleado.emp_nombrecompleto,
                                    }).ToListAsync();
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Obtener citas satisfactorias",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return query;
             }
         }
@@ -295,6 +366,13 @@ namespace Controladores
                                        NombreCliente = cliente.cl_nombrecompleto,
                                        NombreEmpleado = empleado.emp_nombrecompleto,
                                    }).ToListAsync();
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Obtener citas pendientes",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return query.OrderByDescending(o => o.Id).ToList();
             }
         }
@@ -313,6 +391,13 @@ namespace Controladores
                                        NombreCliente = cliente.cl_nombrecompleto,
                                        NombreEmpleado = empleado.emp_nombrecompleto,
                                    }).ToListAsync();
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Obtener citas canceladas",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return query.OrderByDescending(o => o.Id).ToList();
             }
         }
@@ -343,6 +428,13 @@ namespace Controladores
                                        NombreCliente = cliente.cl_nombrecompleto,
                                        NombreEmpleado = empleado.emp_nombrecompleto,
                                    }).ToListAsync();
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Obtener Todas las citas del cliente {query[0].NombreCliente}",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return query.OrderByDescending(o => o.Id).ToList();
             }
         }
@@ -365,6 +457,13 @@ namespace Controladores
                                        NombreCliente = cliente.cl_nombrecompleto,
                                        NombreEmpleado = empleado.emp_nombrecompleto,
                                    }).ToListAsync();
+                await auditCtrl.auditar(new auditorias
+                {
+                    descripcion = $"Obtener Todas las citas del empleado {query[0].NombreEmpleado}",
+                    fecha = DateTime.Now,
+                    hora = DateTime.Now.TimeOfDay,
+                    usuario = global.LoggedUser.usuario_name
+                });
                 return query.OrderByDescending(o => o.Id).ToList();
             }
         }
